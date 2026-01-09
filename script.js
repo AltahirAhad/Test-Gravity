@@ -38,12 +38,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const userProfile = document.getElementById('user-profile');
     const authContainer = document.getElementById('auth-container');
 
-    if (loginBtn && typeof signInWithTwitch === 'function') {
-        loginBtn.addEventListener('click', signInWithTwitch);
+    // Debug Log
+    console.log('Login Button found:', loginBtn);
+
+    if (loginBtn) {
+        loginBtn.addEventListener('click', () => {
+            console.log('Login button clicked'); // Debug
+            if (window.signInWithTwitch) {
+                window.signInWithTwitch();
+            } else {
+                console.error('signInWithTwitch function not found in window scopes');
+                alert('Erreur: La fonction de connexion n\'est pas chargée. Rechargez la page.');
+            }
+        });
     }
 
-    if (logoutBtn && typeof signOut === 'function') {
-        logoutBtn.addEventListener('click', signOut);
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            if (window.signOut) {
+                window.signOut();
+            } else {
+                console.error('signOut function not found');
+            }
+        });
     }
 
     // Check Session
