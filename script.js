@@ -81,15 +81,15 @@ document.addEventListener('DOMContentLoaded', () => {
                         name.textContent = session.user.user_metadata.full_name || session.user.user_metadata.name;
                     }
                 }
-
-                // Clean URL hash (remove access_token)
-                if (window.location.hash && window.location.hash.includes('access_token')) {
-                    window.history.replaceState(null, '', window.location.pathname + window.location.search);
-                }
             } else {
                 // Logged Out
                 if (loginBtn) loginBtn.classList.remove('hidden'); // Ensure visible
                 if (userProfile) userProfile.classList.add('hidden');
+            }
+
+            // Nettoyage de l'URL (Dans tous les cas, connecté ou pas, si l'URL est sale on nettoie)
+            if (window.location.hash && window.location.hash.includes('access_token')) {
+                window.history.replaceState(null, '', window.location.pathname + window.location.search);
             }
         });
     }

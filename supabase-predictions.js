@@ -14,7 +14,7 @@ async function signInWithTwitch() {
     const { data, error } = await db.auth.signInWithOAuth({
         provider: 'twitch',
         options: {
-            redirectTo: window.location.href
+            redirectTo: window.location.origin // Juste la racine (https://site.com) pour éviter les URL à rallonge = erreur 414
         }
     });
     if (error) console.error('Error logging in:', error);
