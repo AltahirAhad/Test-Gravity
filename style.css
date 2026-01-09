@@ -3600,6 +3600,12 @@ body {
     display: none;
 }
 
+/* Utilitaires */
+.hidden,
+.twitch-login-btn.hidden {
+    display: none !important;
+}
+
 .user-avatar {
     width: 32px;
     height: 32px;
