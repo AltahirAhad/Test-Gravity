@@ -125,12 +125,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const bannedUsernames = [
         'hitler', 'nazi', 'fuck', 'shit', 'porn', 'sex', 'dick', 'pussy', 'ass',
         'charliekirk', 'trump', 'biden', 'nigger', 'nigga', 'faggot', 'retard',
-        'admin', 'moderator', 'official', 'staff', 'support'
+        'admin', 'moderator', 'official', 'staff', 'support', 'oussama', 'benkirk',
+        'negros', 'negro'
     ];
 
+    function normalizeUsername(username) {
+        return username
+            .toLowerCase()
+            .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove accents
+            .replace(/\s+/g, '') // Remove all spaces
+            .replace(/[0@]/g, 'o') // Leetspeak: 0 or @ = o
+            .replace(/[1!|]/g, 'i') // Leetspeak: 1, !, | = i
+            .replace(/[3]/g, 'e') // Leetspeak: 3 = e
+            .replace(/[4]/g, 'a') // Leetspeak: 4 = a
+            .replace(/[5\$]/g, 's') // Leetspeak: 5, $ = s
+            .replace(/[7]/g, 't') // Leetspeak: 7 = t
+            .replace(/[8]/g, 'b') // Leetspeak: 8 = b
+            .replace(/[9]/g, 'g'); // Leetspeak: 9 = g
+    }
+
     function isUsernameBanned(username) {
-        const lower = username.toLowerCase();
-        return bannedUsernames.some(banned => lower.includes(banned));
+        const normalized = normalizeUsername(username);
+        return bannedUsernames.some(banned => normalized.includes(banned));
     }
 
     // Save Profile
