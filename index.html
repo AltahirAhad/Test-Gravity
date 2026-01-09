@@ -90,6 +90,21 @@
 
                 <!-- Language Selector -->
                 <div class="nav-right">
+                    <!-- Auth Container -->
+                    <div id="auth-container" class="auth-container">
+                        <button id="login-twitch-btn" class="twitch-login-btn">
+                            <i class="fab fa-twitch"></i>
+                            <span class="desktop-only">Connexion</span>
+                        </button>
+                        <div id="user-profile" class="user-profile hidden">
+                            <img id="user-avatar" src="" alt="Avatar" class="user-avatar">
+                            <span id="user-name" class="user-name desktop-only"></span>
+                            <button id="logout-btn" class="logout-btn" title="Déconnexion">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+
                     <div class="language-selector">
                         <button class="lang-btn" onclick="toggleLanguageMenu()" id="langBtn">
                             <span data-i18n="lang_button_text">Language</span>
@@ -802,4 +817,4 @@
     <script src="script.js"></script>
 </body>
 
-</html> 
+</html>

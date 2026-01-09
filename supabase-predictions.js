@@ -3,91 +3,71 @@
  * Gère la sauvegarde et le chargement des prédictions depuis Supabase
  */
 
-// Générer un code utilisateur unique (format: PRED-XXXX)
+// Initialiser le client Supabase
+const supabase = window.supabaseClient;
+
+/**
+ * Sign in with Twitch
+ */
+async function signInWithTwitch() {
+    if (!supabase) return;
+    const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'twitch',
+    });
+    if (error) console.error('Error logging in:', error);
+}
+
+/**
+ * Sign out
+ */
+async function signOut() {
+    if (!supabase) return;
+    const { error } = await supabase.auth.signOut();
+    if (error) console.error('Error logging out:', error);
+    else window.location.reload(); // Refresh to clear state
+}
+
+/**
+ * Génère un ID unique pour l'utilisateur (fallback si pas connecté)
+ */
 function generateUserCode() {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let code = 'PRED-';
-    for (let i = 0; i < 8; i++) {
-        code += chars.charAt(Math.floor(Math.random() * chars.length));
+    let code = localStorage.getItem('user_code');
+    if (!code) {
+        // Format: PRED-XXXX-XXXX
+        const part1 = Math.random().toString(36).substring(2, 6).toUpperCase();
+        const part2 = Math.random().toString(36).substring(2, 6).toUpperCase();
+        code = `PRED-${part1}${part2}`;
+        localStorage.setItem('user_code', code);
     }
     return code;
 }
 
-// Récupérer ou créer le code utilisateur
-function getUserCode() {
-    let userCode = localStorage.getItem('user_prediction_code');
-    if (!userCode) {
-        userCode = generateUserCode();
-        localStorage.setItem('user_prediction_code', userCode);
-        console.log('🆕 Nouveau code utilisateur créé:', userCode);
-    }
-    return userCode;
-}
-
-// Sauvegarder une prédiction dans Supabase
+/**
+ * Sauvegarde la prédiction dans Supabase
+ */
 async function savePredictionToSupabase(characterId, characterName) {
-    const userCode = getUserCode();
-
-    if (!window.supabaseClient) {
-        console.error('❌ Supabase client not initialized');
-        return false;
-    }
-
-    try {
-        // Vérifier si l'utilisateur a déjà une prédiction
-        const { data: existing, error: fetchError } = await window.supabaseClient
-            .from('predictions')
-            .select('*')
-            .eq('user_code', userCode)
-            .single();
-
-        if (fetchError && fetchError.code !== 'PGRST116') {
-            // PGRST116 = pas de résultat trouvé (normal pour un nouvel utilisateur)
-            throw fetchError;
-        }
-
-        if (existing) {
-            // Mettre à jour la prédiction existante
-            const { data, error } = await window.supabaseClient
-                .from('predictions')
-                .update({
-                    character_id: characterId,
-                    character_name: characterName,
-                    updated_at: new Date().toISOString()
-                })
-                .eq('user_code', userCode)
+    character_id: characterId,
+        character_name: characterName,
+            is_locked: false
+}])
                 .select();
 
-            if (error) throw error;
-            console.log('✅ Prédiction mise à jour dans Supabase:', data);
-        } else {
-            // Créer une nouvelle prédiction
-            const { data, error } = await window.supabaseClient
-                .from('predictions')
-                .insert([{
-                    user_code: userCode,
-                    character_id: characterId,
-                    character_name: characterName,
-                    is_locked: false
-                }])
-                .select();
-
-            if (error) throw error;
-            console.log('✅ Prédiction sauvegardée dans Supabase:', data);
+if (error) throw error;
+console.log('✅ Prédiction sauvegardée dans Supabase:', data);
         }
 
-        // Sauvegarder aussi en local (backup)
-        localStorage.setItem('prediction_2026_id', characterId);
-        localStorage.setItem('prediction_2026_name', characterName);
+// Sauvegarder aussi en local (backup)
+localStorage.setItem('prediction_2026_id', characterId);
+localStorage.setItem('prediction_2026_name', characterName);
 
-        return true;
+return true;
     } catch (error) {
-        console.error('❌ Erreur lors de la sauvegarde:', error);
-        // Fallback sur localStorage si Supabase échoue
-        localStorage.setItem('prediction_2026_id', characterId);
-        localStorage.setItem('prediction_2026_name', characterName);
-        return false;
-    }
+    console.error('❌ Erreur lors de la sauvegarde:', error);
+    // Fallback sur localStorage si Supabase échoue
+    localStorage.setItem('prediction_2026_id', characterId);
+    localStorage.setItem('prediction_2026_name', characterName);
+    return false;
+}
 }
 
 // Charger la prédiction depuis Supabase

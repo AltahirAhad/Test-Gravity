@@ -32,6 +32,46 @@ document.addEventListener('DOMContentLoaded', () => {
         card.addEventListener('dblclick', triggerFlip);
     }
 
+    // 2. Auth Logic
+    const loginBtn = document.getElementById('login-twitch-btn');
+    const logoutBtn = document.getElementById('logout-btn');
+    const userProfile = document.getElementById('user-profile');
+    const authContainer = document.getElementById('auth-container');
+
+    if (loginBtn && typeof signInWithTwitch === 'function') {
+        loginBtn.addEventListener('click', signInWithTwitch);
+    }
+
+    if (logoutBtn && typeof signOut === 'function') {
+        logoutBtn.addEventListener('click', signOut);
+    }
+
+    // Check Session
+    if (window.supabaseClient) {
+        window.supabaseClient.auth.getSession().then(({ data: { session } }) => {
+            if (session) {
+                // Logged In
+                if (loginBtn) loginBtn.classList.add('hidden');
+                if (userProfile) {
+                    userProfile.classList.remove('hidden');
+                    const avatar = document.getElementById('user-avatar');
+                    const name = document.getElementById('user-name');
+
+                    if (avatar && session.user.user_metadata.avatar_url) {
+                        avatar.src = session.user.user_metadata.avatar_url;
+                    }
+                    if (name) {
+                        name.textContent = session.user.user_metadata.full_name || session.user.user_metadata.name;
+                    }
+                }
+            } else {
+                // Logged Out
+                if (loginBtn) loginBtn.classList.remove('hidden'); // Ensure visible
+                if (userProfile) userProfile.classList.add('hidden');
+            }
+        });
+    }
+
 });
 
 /**

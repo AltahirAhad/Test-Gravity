@@ -3553,11 +3553,108 @@ body {
     border-color: #ef4444;
 }
 
-/* Remove hover effects/brightness for loser to make it look "dead" */
-.prediction-result.is-loser:hover {
-    transform: none;
-    box-shadow: none;
+/* =========================================
+   AUTH & TWITCH STYLES
+   ========================================= */
+
+.auth-container {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
 }
+
+.twitch-login-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #9146FF;
+    /* Twitch Purple */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.twitch-login-btn:hover {
+    background: #772ce8;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 4px 12px 4px 4px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.user-profile.hidden {
+    display: none;
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #9146FF;
+}
+
+.user-name {
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.logout-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.logout-btn:hover {
+    color: #ef4444;
+    /* Red for logout */
+}
+
+@media (max-width: 768px) {
+    .auth-container {
+        margin-right: 8px;
+    }
+
+    .twitch-login-btn {
+        padding: 8px;
+    }
+
+    .twitch-login-btn i {
+        font-size: 1.2rem;
+    }
+
+    .user-profile {
+        padding: 4px;
+        background: transparent;
+        border: none;
+    }
+}
+
 
 @keyframes pulse-gold {
 
