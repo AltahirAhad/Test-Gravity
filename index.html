@@ -90,21 +90,15 @@
 
                 <!-- Language Selector -->
                 <div class="nav-right">
-                    <!-- Auth Container -->
-                    <div id="auth-container" class="auth-container">
-                        <button id="login-twitch-btn" class="twitch-login-btn">
-                            <i class="fab fa-twitch"></i>
-                            <span class="desktop-only">Connexion</span>
-                        </button>
-                        <div id="user-profile" class="user-profile hidden">
-                            <img id="user-avatar" src="" alt="Avatar" class="user-avatar">
-                            <span id="user-name" class="user-name desktop-only"></span>
-                            <button id="logout-btn" class="logout-btn" title="Déconnexion">
-                                <i class="fas fa-sign-out-alt"></i>
-                            </button>
+                    <!-- Profile Button -->
+                    <button id="profile-btn" class="profile-btn" title="Modifier mon profil">
+                        <div class="profile-mini">
+                            <img id="nav-avatar-img" src="assets/secret-monkey.png" alt="Avatar">
+                            <span id="nav-username-text">Visiteur</span>
                         </div>
-                    </div>
+                    </button>
 
+                    <!-- Language Selector -->
                     <div class="language-selector">
                         <button class="lang-btn" onclick="toggleLanguageMenu()" id="langBtn">
                             <span data-i18n="lang_button_text">Language</span>
@@ -815,6 +809,41 @@
     <script src="supabase-predictions.js"></script>
     <!-- Main Script -->
     <script src="script.js"></script>
+    <!-- Profile Modal -->
+    <div id="profile-modal" class="modal">
+        <div class="modal-content profile-modal-content">
+            <span class="close-modal" id="close-profile-modal">&times;</span>
+            <h2 data-i18n="profile_title">Mon Profil</h2>
+            <div class="profile-form">
+                <div class="form-group">
+                    <label for="profile-username" data-i18n="profile_username">Pseudo</label>
+                    <input type="text" id="profile-username" placeholder="Pseudo (max 15 chars)" maxlength="15">
+                </div>
+                <div class="form-group">
+                    <label for="profile-avatar" data-i18n="profile_avatar">Lien Image Avatar</label>
+                    <input type="text" id="profile-avatar" placeholder="https://...">
+                    <p class="input-hint" style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">Copiez l'adresse
+                        d'une image sur internet</p>
+                </div>
+
+                <div class="profile-preview-section">
+                    <p>Aperçu :</p>
+                    <div class="preview-box"
+                        style="display: flex; align-items: center; gap: 10px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                        <img id="preview-avatar-img" src="assets/secret-monkey.png" alt="Aperçu"
+                            style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                        <span id="preview-username-text" style="font-weight: bold;">Visiteur</span>
+                    </div>
+                </div>
+
+                <div class="modal-buttons"
+                    style="margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end;">
+                    <button id="save-profile-btn" class="save-btn"
+                        style="background: #fbbf24; color: black; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer;">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

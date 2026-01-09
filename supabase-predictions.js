@@ -7,34 +7,6 @@
 const db = window.supabaseClient;
 
 /**
- * Sign in with Twitch
- */
-async function signInWithTwitch() {
-    if (!db) return;
-    const { data, error } = await db.auth.signInWithOAuth({
-        provider: 'twitch',
-        options: {
-            redirectTo: window.location.origin // Juste la racine (https://site.com) pour éviter les URL à rallonge = erreur 414
-        }
-    });
-    if (error) console.error('Error logging in:', error);
-}
-
-/**
- * Sign out
- */
-async function signOut() {
-    if (!db) return;
-    const { error } = await db.auth.signOut();
-    if (error) console.error('Error logging out:', error);
-    else window.location.reload(); // Refresh to clear state
-}
-
-// Export functions globally
-window.signInWithTwitch = signInWithTwitch;
-window.signOut = signOut;
-
-/**
  * Génère un ID unique pour l'utilisateur (fallback si pas connecté)
  */
 function generateUserCode() {
@@ -60,17 +32,10 @@ async function savePredictionToSupabase(characterId, characterName) {
 
     const userCode = generateUserCode();
 
-    // Check for authenticated user
-    const { data: { session } } = await db.auth.getSession();
-    let authData = {};
-
-    if (session && session.user) {
-        // User is logged in with Twitch
-        authData = {
-            username: session.user.user_metadata.full_name || session.user.user_metadata.name,
-            avatar_url: session.user.user_metadata.avatar_url,
-        };
-    }
+    // Récupérer le profil LOCAL du visiteur
+    // (Plus besoin de Session Twitch, on fait confiance au LocalStorage du navigateur)
+    const guestName = localStorage.getItem('guest_username') || 'Visiteur';
+    const guestAvatar = localStorage.getItem('guest_avatar') || 'assets/secret-monkey.png';
 
     // 1. Check si l'utilisateur a déjà une prédiction
     const { data: existingData, error: fetchError } = await db
@@ -90,7 +55,8 @@ async function savePredictionToSupabase(characterId, characterName) {
         character_name: characterName,
         prediction_date: new Date().toISOString(),
         is_locked: false, // Par défaut non verrouillé
-        ...authData // Ajoute les infos Twitch si disponibles
+        username: guestName, // On envoie le pseudo local
+        avatar_url: guestAvatar // On envoie l'avatar local
     };
 
     let error;
@@ -113,7 +79,7 @@ async function savePredictionToSupabase(characterId, characterName) {
     if (error) {
         console.error('Error saving to Supabase:', error);
     } else {
-        console.log('✅ Prédiction sauvegardée dans Supabase');
+        console.log('✅ Prédiction sauvegardée dans Supabase avec profil invité');
     }
 }
 
@@ -174,14 +140,15 @@ async function lockPredictionInSupabase() {
     if (!db) return false;
 
     try {
-        // Check for authenticated user to update Metadata on lock
-        const { data: { session } } = await db.auth.getSession();
-        let updateData = { is_locked: true };
+        // Mettre à jour avec le dernier pseudo connu au moment du lock
+        const guestName = localStorage.getItem('guest_username') || 'Visiteur';
+        const guestAvatar = localStorage.getItem('guest_avatar') || 'assets/secret-monkey.png';
 
-        if (session && session.user) {
-            updateData.username = session.user.user_metadata.full_name || session.user.user_metadata.name;
-            updateData.avatar_url = session.user.user_metadata.avatar_url;
-        }
+        const updateData = {
+            is_locked: true,
+            username: guestName,
+            avatar_url: guestAvatar
+        };
 
         const { data, error } = await db
             .from('predictions')
@@ -206,19 +173,9 @@ window.lockPredictionInSupabase = lockPredictionInSupabase;
 
 // Initialiser au chargement de la page
 document.addEventListener('DOMContentLoaded', async () => {
-    // Check session first
-    const { data: { session } } = await db.auth.getSession();
-    if (session) {
-        console.log("👤 User is signed in:", session.user.user_metadata.full_name);
-    }
-
     console.log('🔄 Chargement de la prédiction depuis Supabase...');
     const prediction = await loadPredictionFromSupabase();
 
-    // script.js handles the UI update if window.updatePredictionUI exists, 
-    // or we can dispatch an event or let script.js call loadPredictionFromSupabase itself.
-    // For now, let's just make sure data is in localStorage so script.js picks it up naturally
-    // or call the UI update if available.
     if (prediction && window.updatePredictionUI) {
         window.updatePredictionUI(prediction.character_id);
     }

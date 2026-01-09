@@ -3554,124 +3554,97 @@ body {
 }
 
 /* =========================================
-   AUTH & TWITCH STYLES
+   USER PROFILE STYLES (NO AUTH)
    ========================================= */
 
-.auth-container {
-    display: flex;
-    align-items: center;
+.profile-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 50px;
+    transition: all 0.2s ease;
     margin-right: 15px;
 }
 
-.twitch-login-btn {
+.profile-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #fbbf24;
+}
+
+.profile-mini {
     display: flex;
     align-items: center;
     gap: 8px;
-    background: #9146FF;
-    /* Twitch Purple */
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    font-family: 'Outfit', sans-serif;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.twitch-login-btn:hover {
-    background: #772ce8;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-}
-
-.user-profile {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 4px 12px 4px 4px;
-    border-radius: 50px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.user-profile.hidden {
-    display: none;
-}
-
-/* Utilitaires */
-.hidden,
-.twitch-login-btn.hidden {
-    display: none !important;
-}
-
-.user-avatar {
-    width: 32px;
-    height: 32px;
+.profile-mini img {
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #9146FF;
+    border: 2px solid #fbbf24;
 }
 
-.user-name {
-    color: white;
+.profile-mini span {
     font-weight: 600;
     font-size: 0.9rem;
-    max-width: 150px;
+    max-width: 100px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.logout-btn {
-    background: transparent;
-    border: none;
-    color: rgba(255, 255, 255, 0.6);
-    cursor: pointer;
-    padding: 4px;
-    border-radius: 4px;
-    transition: color 0.2s;
-    display: flex;
-    align-items: center;
+/* Modal form specifics */
+.profile-modal-content {
+    background: #1a1a1a;
+    border: 1px solid #fbbf24;
+    max-width: 400px;
 }
 
-.logout-btn:hover {
-    color: #ef4444;
-    /* Red for logout */
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: left;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #fbbf24;
+    font-size: 0.9rem;
+}
+
+.form-group input {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    font-family: inherit;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #fbbf24;
 }
 
 @media (max-width: 768px) {
-    .auth-container {
+    .profile-btn {
         margin-right: 8px;
+        padding: 4px 8px;
     }
 
-    .twitch-login-btn {
-        padding: 8px;
-    }
-
-    .twitch-login-btn i {
-        font-size: 1.2rem;
-    }
-
-    .user-profile {
-        padding: 4px;
-        background: transparent;
-        border: none;
-    }
-}
-
-
-@keyframes pulse-gold {
-
-    0%,
-    100% {
-        box-shadow: 0 0 15px rgba(251, 191, 36, 0.6);
-        transform: scale(1);
-    }
-
-    50% {
-        box-shadow: 0 0 25px rgba(251, 191, 36, 0.9);
-        transform: scale(1.05);
+    .profile-mini span {
+        display: none;
+        /* Hide name on mobile to save space */
     }
 }

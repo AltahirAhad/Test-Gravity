@@ -32,67 +32,85 @@ document.addEventListener('DOMContentLoaded', () => {
         card.addEventListener('dblclick', triggerFlip);
     }
 
-    // 2. Auth Logic
-    const loginBtn = document.getElementById('login-twitch-btn');
-    const logoutBtn = document.getElementById('logout-btn');
-    const userProfile = document.getElementById('user-profile');
-    const authContainer = document.getElementById('auth-container');
+    // 2. Profile Logic (Local Guest)
+    const profileBtn = document.getElementById('profile-btn');
+    const profileModal = document.getElementById('profile-modal');
+    const closeProfileModal = document.getElementById('close-profile-modal');
+    const saveProfileBtn = document.getElementById('save-profile-btn');
+    const usernameInput = document.getElementById('profile-username');
+    const avatarInput = document.getElementById('profile-avatar');
 
-    // Debug Log
-    console.log('Login Button found:', loginBtn);
+    // UI Elements
+    const navUsername = document.getElementById('nav-username-text');
+    const navAvatar = document.getElementById('nav-avatar-img');
+    const previewUsername = document.getElementById('preview-username-text');
+    const previewAvatar = document.getElementById('preview-avatar-img');
 
-    if (loginBtn) {
-        loginBtn.addEventListener('click', () => {
-            console.log('Login button clicked'); // Debug
-            if (window.signInWithTwitch) {
-                window.signInWithTwitch();
-            } else {
-                console.error('signInWithTwitch function not found in window scopes');
-                alert('Erreur: La fonction de connexion n\'est pas chargée. Rechargez la page.');
-            }
+    // Load Profile from LocalStorage
+    const storedUsername = localStorage.getItem('guest_username');
+    const storedAvatar = localStorage.getItem('guest_avatar');
+
+    if (storedUsername) {
+        if (navUsername) navUsername.textContent = storedUsername;
+        if (usernameInput) usernameInput.value = storedUsername;
+        if (previewUsername) previewUsername.textContent = storedUsername;
+    }
+    if (storedAvatar) {
+        if (navAvatar) navAvatar.src = storedAvatar;
+        if (avatarInput) avatarInput.value = storedAvatar;
+        if (previewAvatar) previewAvatar.src = storedAvatar;
+    }
+
+    // Open Modal
+    if (profileBtn) {
+        profileBtn.addEventListener('click', () => {
+            if (profileModal) profileModal.style.display = 'block';
         });
     }
 
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            if (window.signOut) {
-                window.signOut();
-            } else {
-                console.error('signOut function not found');
-            }
+    // Close Modal
+    if (closeProfileModal) {
+        closeProfileModal.addEventListener('click', () => {
+            if (profileModal) profileModal.style.display = 'none';
         });
     }
 
-    // Check Session
-    if (window.supabaseClient) {
-        window.supabaseClient.auth.getSession().then(({ data: { session } }) => {
-            if (session) {
-                // Logged In
-                if (loginBtn) loginBtn.classList.add('hidden');
-                if (userProfile) {
-                    userProfile.classList.remove('hidden');
-                    const avatar = document.getElementById('user-avatar');
-                    const name = document.getElementById('user-name');
-
-                    if (avatar && session.user.user_metadata.avatar_url) {
-                        avatar.src = session.user.user_metadata.avatar_url;
-                    }
-                    if (name) {
-                        name.textContent = session.user.user_metadata.full_name || session.user.user_metadata.name;
-                    }
-                }
-            } else {
-                // Logged Out
-                if (loginBtn) loginBtn.classList.remove('hidden'); // Ensure visible
-                if (userProfile) userProfile.classList.add('hidden');
-            }
-
-            // Nettoyage de l'URL (Dans tous les cas, connecté ou pas, si l'URL est sale on nettoie)
-            if (window.location.hash && window.location.hash.includes('access_token')) {
-                window.history.replaceState(null, '', window.location.pathname + window.location.search);
-            }
+    // Live Preview
+    if (usernameInput) {
+        usernameInput.addEventListener('input', (e) => {
+            if (previewUsername) previewUsername.textContent = e.target.value || 'Visiteur';
         });
     }
+    if (avatarInput) {
+        avatarInput.addEventListener('input', (e) => {
+            if (previewAvatar) previewAvatar.src = e.target.value || 'assets/secret-monkey.png';
+        });
+    }
+
+    // Save Profile
+    if (saveProfileBtn) {
+        saveProfileBtn.addEventListener('click', () => {
+            const newName = usernameInput.value.trim() || 'Visiteur';
+            const newAvatar = avatarInput.value.trim() || 'assets/secret-monkey.png';
+
+            localStorage.setItem('guest_username', newName);
+            localStorage.setItem('guest_avatar', newAvatar);
+
+            // Update UI
+            if (navUsername) navUsername.textContent = newName;
+            if (navAvatar) navAvatar.src = newAvatar;
+
+            // Close Modal
+            if (profileModal) profileModal.style.display = 'none';
+        });
+    }
+
+    // Close modal if clicking outside
+    window.addEventListener('click', (event) => {
+        if (event.target == profileModal) {
+            profileModal.style.display = "none";
+        }
+    });
 
 });
 
