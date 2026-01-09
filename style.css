@@ -3751,6 +3751,32 @@ body {
     color: white;
 }
 
+.upload-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+.upload-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #fbbf24;
+    transform: translateY(-1px);
+}
+
+.upload-btn i {
+    font-size: 1rem;
+}
+
 .save-btn {
     background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
     color: #000;

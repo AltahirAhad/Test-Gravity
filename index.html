@@ -820,9 +820,12 @@
                     <input type="text" id="profile-username" placeholder="Pseudo (max 15 chars)" maxlength="15">
                 </div>
                 <div class="form-group">
-                    <label for="profile-avatar" data-i18n="profile_avatar">Lien Image Avatar</label>
-                    <input type="text" id="profile-avatar" placeholder="https://...">
-                    <p class="input-hint">Copiez l'adresse d'une image sur internet</p>
+                    <label data-i18n="profile_avatar">Image Avatar</label>
+                    <input type="file" id="profile-avatar-upload" accept="image/*" style="display: none;">
+                    <button type="button" id="upload-avatar-btn" class="upload-btn">
+                        <i class="fas fa-upload"></i> Choisir une image
+                    </button>
+                    <p class="input-hint">JPG, PNG ou GIF (max 2 Mo)</p>
                 </div>
 
                 <div class="profile-preview-section">

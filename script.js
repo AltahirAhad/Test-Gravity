@@ -38,7 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeProfileModal = document.getElementById('close-profile-modal');
     const saveProfileBtn = document.getElementById('save-profile-btn');
     const usernameInput = document.getElementById('profile-username');
-    const avatarInput = document.getElementById('profile-avatar');
+    const avatarUploadInput = document.getElementById('profile-avatar-upload');
+    const uploadAvatarBtn = document.getElementById('upload-avatar-btn');
 
     // UI Elements
     const navUsername = document.getElementById('nav-username-text');
@@ -57,7 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (storedAvatar) {
         if (navAvatar) navAvatar.src = storedAvatar;
-        if (avatarInput) avatarInput.value = storedAvatar;
         if (previewAvatar) previewAvatar.src = storedAvatar;
     }
 
@@ -75,15 +75,49 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Live Preview
+    // Live Preview for Username
     if (usernameInput) {
         usernameInput.addEventListener('input', (e) => {
             if (previewUsername) previewUsername.textContent = e.target.value || 'Visiteur';
         });
     }
-    if (avatarInput) {
-        avatarInput.addEventListener('input', (e) => {
-            if (previewAvatar) previewAvatar.src = e.target.value || 'assets/secret-monkey.png';
+
+    // File Upload Logic
+    if (uploadAvatarBtn && avatarUploadInput) {
+        uploadAvatarBtn.addEventListener('click', () => {
+            avatarUploadInput.click();
+        });
+
+        avatarUploadInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Validation
+            const maxSize = 2 * 1024 * 1024; // 2 MB
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+
+            if (!allowedTypes.includes(file.type)) {
+                alert('Format non supporté. Utilisez JPG, PNG, GIF ou WebP.');
+                return;
+            }
+
+            if (file.size > maxSize) {
+                alert('Image trop volumineuse (max 2 Mo).');
+                return;
+            }
+
+            // Convert to base64
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const base64Image = event.target.result;
+                // Update preview
+                if (previewAvatar) previewAvatar.src = base64Image;
+                // Store temporarily (will be saved on "Enregistrer")
+                avatarUploadInput.dataset.tempAvatar = base64Image;
+                uploadAvatarBtn.innerHTML = '<i class="fas fa-check"></i> Image chargée';
+                uploadAvatarBtn.style.borderColor = '#10b981';
+            };
+            reader.readAsDataURL(file);
         });
     }
 
@@ -91,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (saveProfileBtn) {
         saveProfileBtn.addEventListener('click', () => {
             const newName = usernameInput.value.trim() || 'Visiteur';
-            const newAvatar = avatarInput.value.trim() || 'assets/secret-monkey.png';
+            const newAvatar = avatarUploadInput.dataset.tempAvatar || storedAvatar || 'assets/secret-monkey.png';
 
             localStorage.setItem('guest_username', newName);
             localStorage.setItem('guest_avatar', newAvatar);
@@ -99,6 +133,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // Update UI
             if (navUsername) navUsername.textContent = newName;
             if (navAvatar) navAvatar.src = newAvatar;
+
+            // Reset upload button
+            if (uploadAvatarBtn) {
+                uploadAvatarBtn.innerHTML = '<i class="fas fa-upload"></i> Choisir une image';
+                uploadAvatarBtn.style.borderColor = '';
+            }
 
             // Close Modal
             if (profileModal) profileModal.style.display = 'none';
