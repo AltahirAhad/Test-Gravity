@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartes - Altahir</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="nav-styles.css">
+</head>
+
+<body>
+
+    <div class="liquid-background">
+        <!-- Liquid Plasma Flow -->
+        <div class="plasma-blob p1"></div>
+        <div class="plasma-blob p2"></div>
+        <div class="plasma-blob p3"></div>
+
+        <!-- Dense Starfield -->
+        <div class="star s1" style="top: 5%; left: 5%; animation-delay: 0.2s;"></div>
+        <div class="star s2" style="top: 12%; left: 92%; animation-delay: 1.5s;"></div>
+        <div class="star s1" style="top: 28%; left: 42%; animation-delay: 2.1s;"></div>
+        <div class="star s2" style="top: 33%; left: 12%; animation-delay: 0.8s;"></div>
+        <div class="star s1" style="top: 48%; left: 78%; animation-delay: 3.2s;"></div>
+        <div class="star s2" style="top: 52%; left: 22%; animation-delay: 1.1s;"></div>
+        <div class="star s1" style="top: 68%; left: 98%; animation-delay: 0.5s;"></div>
+        <div class="star s2" style="top: 72%; left: 48%; animation-delay: 2.8s;"></div>
+        <div class="star s1" style="top: 88%; left: 8%; animation-delay: 1.4s;"></div>
+        <div class="star s2" style="top: 92%; left: 32%; animation-delay: 3.5s;"></div>
+
+        <!-- Shooting Stars -->
+        <div class="shooting-star s1"></div>
+        <div class="shooting-star s2"></div>
+        <div class="shooting-star s3"></div>
+        <div class="shooting-star s4"></div>
+
+    </div>
+
+    <div class="app-container">
+        <!-- New Top Navigation Bar -->
+        <nav class="top-nav">
+            <div class="top-nav-content">
+                <!-- Search Icon removed -->
+                <!-- Empty left for grid balance -->
+                <div class="nav-left"></div>
+
+                <div class="nav-center">
+                    <img src="assets/DragonBallLegends_Logo.png" alt="Dragon Ball Legends" class="nav-logo">
+                </div>
+
+                <!-- Language Selector -->
+                <div class="nav-right">
+                    <div class="language-selector">
+                        <button class="lang-btn" onclick="toggleLanguageMenu()" id="langBtn">
+                            <span data-i18n="lang_button_text">Language</span>
+                            <div class="arrow-icon"></div>
+                        </button>
+                        <div class="lang-dropdown" id="langDropdown">
+                            <a href="#" class="lang-option" onclick="setLanguage('fr'); return false;" id="lang-fr">
+                                <span class="lang-flag">🇫🇷</span>
+                                <span>Français</span>
+                            </a>
+                            <a href="#" class="lang-option" onclick="setLanguage('en'); return false;" id="lang-en">
+                                <span class="lang-flag">🇺🇸</span>
+                                <span>English</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Header (Same as index) -->
+        <header class="main-header">
+            <div class="header-content">
+                <div class="header-center">
+                    <h1 class="header-title">Collection des <span class="text-ll">Personnages</span></h1>
+                </div>
+            </div>
+        </header>
+
+        <main class="content-wrapper">
+            <!-- Character Grid -->
+            <div class="character-grid-page">
+                <!-- Example Card: Gohan/Trunks -->
+                <div class="character-card-wrapper">
+                    <a href="character_detail.html" class="card-link">
+                        <img src="assets/jan_card_1_no_badge.png" alt="Gohan (Ado) & Trunks (Jeune) Legends Limited"
+                            class="char-art-large">
+                    </a>
+                    <div class="card-name">Gohan & Trunks</div>
+                </div>
+
+                <!-- Placeholders to show grid -->
+                <div class="character-card-wrapper placeholder"></div>
+                <div class="character-card-wrapper placeholder"></div>
+                <div class="character-card-wrapper placeholder"></div>
+                <div class="character-card-wrapper placeholder"></div>
+                <div class="character-card-wrapper placeholder"></div>
+                <div class="character-card-wrapper placeholder"></div>
+                <div class="character-card-wrapper placeholder"></div>
+                <div class="character-card-wrapper placeholder"></div>
+                <div class="character-card-wrapper placeholder"></div>
+                <div class="character-card-wrapper placeholder"></div>
+                <div class="character-card-wrapper placeholder"></div>
+                <div class="character-card-wrapper placeholder"></div>
+
+            </div>
+        </main>
+        <footer class="main-footer">
+            <div class="footer-content">
+                <div class="footer-disclaimer" data-i18n="footer_disclaimer">
+                    ©Bird Studio/Shueisha et Toei Animation.<br>
+                    ©Bandai Namco Entertainment Inc.<br>
+                    Site fan non officiel, sans affiliation.
+                </div>
+                <div class="footer-bottom">
+                    <p class="footer-copyright">© 2026</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Background Scripts similar to index if needed, or just CSS -->
+    <script src="script.js"></script>
+</body>
+
+</html>

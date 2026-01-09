@@ -1,0 +1,3519 @@
+:root {
+    --bg-dark: #0a0a0e;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --text-primary: #ffffff;
+    --accent-gold: #fbbf24;
+    --neon-purple: #a855f7;
+    --neon-red: #ef4444;
+    --neon-blue: #3b82f6;
+    --neon-orange: #f97316;
+    --font-main: 'Outfit', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    /* Changed from center to flex-start to remove top gap */
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding-top: 60px;
+    /* Account for fixed nav bar height */
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(249, 115, 22, 0.1) 0%, transparent 20%);
+}
+
+.app-container {
+    width: 100%;
+    max-width: 1600px;
+    padding: 0;
+    /* Removed padding to prevent header shift */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* =========================================
+   TOP NAVIGATION BAR
+   ========================================= */
+.top-nav {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    background: rgba(10, 10, 14, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.top-nav-content {
+    max-width: 1600px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    height: 60px;
+}
+
+.nav-left,
+.nav-right {
+    flex: 1;
+    display: flex;
+}
+
+.nav-left {
+    justify-content: flex-start;
+}
+
+.nav-right {
+    justify-content: flex-end;
+}
+
+.nav-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-brand-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.nav-logo {
+    height: 40px;
+    /* Constrain the height to fit the 60px nav bar */
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    transition: transform 0.2s;
+}
+
+.nav-logo:hover {
+    transform: scale(1.05);
+}
+
+.nav-search-icon {
+    width: 24px;
+    height: 24px;
+    color: #fff;
+    opacity: 0.9;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.nav-search-icon:hover {
+    color: var(--accent-gold);
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Burger Menu */
+.burger-menu {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+.burger-menu span {
+    display: block;
+    height: 3px;
+    background: #fff;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.burger-menu:hover span {
+    background: var(--accent-gold);
+}
+
+/* Mobile Navigation */
+@media (max-width: 768px) {
+    .top-nav-content {
+        padding: 0.75rem 1.5rem;
+        height: 50px;
+    }
+
+    .nav-logo {
+        height: 30px;
+        /* Smaller for mobile */
+    }
+
+    .nav-brand-name {
+        font-size: 1.2rem;
+    }
+
+    .nav-search-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .burger-menu {
+        width: 26px;
+        height: 20px;
+    }
+}
+
+/* Header Styling - Redesigned */
+.main-header {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    /* Negative margin to break out of container */
+    /* Darker overlay for better text pop - 85% opacity */
+    /* REMOVED GRADIENT FROM HERE, MOVED TO ::before */
+    background: url('assets/custom_header_banner.png');
+    background-size: cover;
+    background-position: center center;
+    padding: 0;
+    margin-bottom: 3rem;
+    overflow: hidden;
+    position: relative;
+    /* animation: headerShine 8s ease-in-out infinite; <-- REMOVED */
+    /* animation: headerShadowFade 30s infinite; <-- REMOVED */
+
+    /* Thinner Golden Glow Border to match footer */
+    border-bottom: 1px solid rgba(251, 191, 36, 0.6);
+    box-shadow: 0 2px 10px rgba(249, 115, 22, 0.2);
+}
+
+.main-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 1;
+    animation: fadeOverlay 30s infinite;
+}
+
+/* 
+@keyframes headerShadowFade { ... } <-- REMOVED UNUSED ANIMATION 
+*/
+
+.header-content {
+    position: relative;
+    z-index: 2;
+    /* Ensure content stays above overlay */
+    max-width: 1600px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 4rem;
+    /* Increased side padding to move elements inward */
+    height: 150px;
+    animation: fadeText 30s infinite;
+    /* NEW: Text fade */
+}
+
+.header-left {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    width: 200px;
+    /* Fixed width to ensure consistent positioning */
+    flex-shrink: 0;
+}
+
+.brand-name {
+    font-size: 2rem;
+    font-weight: 700;
+    /* Less bold, more elegant */
+    color: #fff;
+    letter-spacing: -0.5px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.brand-name:hover {
+    color: var(--accent-gold);
+    transform: scale(1.05);
+}
+
+.version-tag {
+    font-size: 0.9rem;
+    /* Scaled up */
+    color: #bbb;
+    /* Lighter color for visibility */
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.header-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex: 1;
+    /* Takes up remaining space, keeping left and right sections fixed */
+}
+
+/* Override previous hidden h1 */
+.header-title {
+    display: block;
+    font-size: 1.7rem;
+    font-weight: 700;
+    /* Subtle gradient for a premium look */
+    background: linear-gradient(180deg, #ffffff 0%, #e0e0e0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    /* Extra stability for webkit */
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    cursor: default;
+}
+
+/* Hover effects for title parts */
+.text-ll,
+.text-ultra {
+    display: inline-block;
+    position: relative;
+    transition: all 0.3s ease;
+    /* Apply base gradient locally to ensure visibility in inline-block context */
+    background: linear-gradient(180deg, #ffffff 0%, #e0e0e0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-ll:hover {
+    color: #ffd700;
+    -webkit-text-fill-color: #ffd700;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    background-image: none;
+    /* Hide base gradient to show solid color */
+}
+
+.text-ultra::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg,
+            #ffffff 0%,
+            #3b82f6 25%,
+            #a855f7 50%,
+            #ef4444 75%,
+            #ffd700 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    /* Ultra-smooth fade */
+    animation: ultraShine 3s linear infinite;
+    pointer-events: none;
+}
+
+/* Subtitle for character names (e.g., "(DAIMA)") */
+.card-name-large .name-subtitle {
+    font-size: 0.75em;
+    opacity: 0.8;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.text-ultra:hover::after {
+    opacity: 1;
+}
+
+.text-ultra:hover {
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+}
+
+.text-ultra:hover {
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+}
+
+@keyframes ultraShine {
+    to {
+        background-position: 200% center;
+    }
+}
+
+/* =========================================
+   YEAR SWITCHER (2024 / 2025)
+   ========================================= */
+.year-switcher-container {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0;
+    margin-bottom: 0.5rem;
+}
+
+.year-switcher {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 24px;
+    border-radius: 50px;
+    gap: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.year-link {
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.4);
+    text-decoration: none;
+    font-family: 'Outfit', sans-serif;
+    transition: all 0.3s ease;
+    letter-spacing: 1px;
+}
+
+.year-link:hover {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.year-link.active {
+    color: #ffffff;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    transform: scale(1.1);
+}
+
+.year-divider {
+    width: 2px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+}
+
+/* Timeline Year Switching Visibility */
+.timeline-year {
+    display: none;
+    width: 100%;
+    opacity: 0;
+}
+
+.timeline-year.active {
+    display: block;
+    opacity: 1;
+    animation: timelineAppear 0.5s ease-out forwards;
+}
+
+@keyframes timelineAppear {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Ensure empty boxes in template have a minimum height */
+#timeline-2024 .month-box,
+#timeline-2026 .month-box {
+    min-height: 151px;
+    /* Match standard box height with 2 characters roughly */
+}
+
+/* Coming Soon state for future months */
+.coming-soon .month-box,
+.coming-soon .month-meta {
+    opacity: 0.15;
+    filter: grayscale(1);
+}
+
+.coming-soon {
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Base line style for coming soon */
+.coming-soon .month-line-segment .line {
+    background: #333;
+    box-shadow: none;
+}
+
+.coming-soon .month-line-segment .dot {
+    background-color: #333;
+    box-shadow: none;
+}
+
+/* Transition gradient on the FIRST coming-soon month to bridge from active months */
+.month-item:not(.coming-soon)+.month-item.coming-soon .month-line-segment .line {
+    background: linear-gradient(to right, #fbbf24 0%, #333 100%);
+    opacity: 1;
+    /* Keep it visible even if parent is low opacity */
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+    .year-link {
+        font-size: 1.1rem;
+    }
+
+    .year-switcher {
+        padding: 4px 15px;
+        gap: 10px;
+    }
+
+    #timeline-2024 .month-box,
+    #timeline-2026 .month-box {
+        min-height: 175px;
+        /* Increased to match populated boxes */
+    }
+}
+
+/* Mobile adjustments for New Year Title */
+@media (max-width: 480px) {
+    .year-title-container {
+        margin-bottom: 1rem;
+    }
+
+    .year-text {
+        font-size: 1.8rem;
+    }
+}
+
+.header-subtitle {
+    font-size: 0.8rem;
+    color: #ccc;
+    margin-top: 4px;
+    font-style: italic;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    width: 200px;
+    /* Fixed width to match header-left */
+    flex-shrink: 0;
+    justify-content: flex-end;
+    /* Align search icon to the right */
+}
+
+.search-icon {
+    width: 28px;
+    height: 28px;
+    color: #fff;
+    opacity: 0.9;
+    cursor: pointer;
+    transition: all 0.2s;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.8));
+}
+
+
+
+.search-icon:hover {
+    color: var(--accent-gold);
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+
+
+.timeline-grid {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0;
+    /* Space handled by separator or margin */
+    padding: 1rem 2rem 0 2rem;
+}
+
+.semester-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.semester-separator {
+    height: 3rem;
+    /* Spacing between semesters */
+    width: 100%;
+}
+
+.month-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    gap: 1.5rem;
+    /* Increased from 10px to separate triangle from line */
+    min-width: 0;
+    /* Force grid items to shrink and prevent overflow wrapping */
+}
+
+/* Month Meta: Line + Label Container */
+.month-meta {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    /* Space between line and text */
+}
+
+/* Visual Line Segment with Dot */
+.month-line-segment {
+    width: 100%;
+    height: 14px;
+    /* Height for dot and alignment */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.month-line-segment .line {
+    position: absolute;
+    /* Bridge slightly more than 1.5rem to ensure no sub-pixel gaps */
+    width: calc(100% + 1.6rem);
+    height: 4px;
+    background-color: #fbbf24;
+    border-radius: 0;
+    /* More 'popping' but fine neon glow */
+    box-shadow: 0 3px 8px rgba(249, 115, 22, 0.8), 0 -3px 8px rgba(249, 115, 22, 0.8);
+    z-index: 1;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    /* Prevent line from blocking hover reset */
+}
+
+.month-item:first-child .month-line-segment .line {
+    width: calc(100% + 1.6rem);
+}
+
+.month-item:last-child .month-line-segment .line {
+    width: calc(100% + 1.6rem);
+}
+
+
+.month-line-segment .dot {
+    width: 14px;
+    height: 14px;
+    border: 3px solid #1a1a1d;
+    background-color: #fbbf24;
+    border-radius: 50%;
+    z-index: 2;
+    box-shadow: 0 0 8px #f97316;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (hover: hover) {
+    .month-item:hover .dot {
+        background-color: #fbbf24;
+        /* Keep base yellow */
+        border-color: #1a1a1d;
+        /* Keep black border */
+        box-shadow: 0 0 12px #f97316;
+        /* Standard glow intensity */
+        transform: scale(1.3);
+        /* Slightly more growth as requested */
+    }
+}
+
+.month-label {
+    font-size: 1.2rem;
+    /* Slightly reduced for better fit on narrow screens */
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    letter-spacing: 0.5px;
+    text-align: center;
+    white-space: nowrap;
+    /* Prevent wrapping */
+    transition: all 0.3s ease;
+}
+
+@media (hover: hover) {
+    .month-item:hover .month-label {
+        color: #fbbf24;
+        text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+        /* Lifting removed as requested */
+    }
+}
+
+
+
+/* Special Hover for Legends Festival Months (NOV/DEC) */
+.month-item:has(.festival-card):hover .month-label {
+    color: #f97316;
+    /* Festival Orange */
+    -webkit-text-fill-color: #f97316;
+    text-shadow: 0 0 10px rgba(249, 115, 22, 0.4);
+}
+
+/* Special Hover for Ultra Month (MARS) - Matching Header ULTRA style */
+.month-item:has(.ultra-month):hover .month-label {
+    background: linear-gradient(135deg,
+            #ffffff 0%,
+            #3b82f6 25%,
+            #a855f7 50%,
+            #ef4444 75%,
+            #ffd700 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: ultraShine 3s linear infinite;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+    text-shadow: none;
+}
+
+.month-item:has(.bg-glow.fire):hover .month-label {
+    color: #ef4444;
+    /* Festival Fire Red */
+    -webkit-text-fill-color: #ef4444;
+    text-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+}
+
+/* Month Box Container - Tighter Fit */
+.month-box {
+    width: 100%;
+    /*
+       Aspect Ratio Calculation for 2x2 cards (2/3 ratio each):
+       Total Grid Ratio = (2 * 2w) / (2 * 3h) = 2/3.
+    */
+    aspect-ratio: 2/3.1 !important;
+    /* User Reference Gradient: Dark Grey/Black to lighter greyish/transparent? "noir gris - à gris clair" */
+    background: linear-gradient(180deg, #1f1f23 0%, #121215 100%);
+    border-radius: 16px;
+    border: 3px solid #333;
+    position: relative;
+    overflow: visible;
+    /* Changed from hidden to visible so triangle matches outside? No, triangle needs to be outside. */
+    /* Grid settings */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    padding: 12px;
+    gap: 10px;
+    align-items: center;
+    justify-items: center;
+    flex-shrink: 0;
+    /* Prevent shrinking below aspect ratio */
+    min-width: 160px;
+    /* Prevent prediction card from becoming too small on narrow screens */
+    transition: border-color 0.3s ease;
+    /* Added transition for smooth hover */
+}
+
+@media (hover: hover) {
+    .month-box:not(.special-7th-anniv):not(.anniv-june-25):hover {
+        border-color: #555;
+        background: linear-gradient(180deg, #1f1f23 0%, #121215 100%) !important;
+        /* Preserve dark background, only border changes */
+    }
+}
+
+/* Triangle Indicator for Standard Boxes */
+/* Triangle Indicator using Rotated Square for Border */
+/* Triangle Indicator - Méthode "Flat-Top" (Fusion Parfaite) */
+.triangle-indicator {
+    position: absolute;
+    bottom: -18px;
+    /* Correspond à la hauteur du triangle pour une fusion bord à bord */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 18px;
+    z-index: 10;
+    pointer-events: none;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    background: #333;
+    /* Couleur de bordure par défaut */
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.triangle-indicator::after {
+    content: '';
+    position: absolute;
+    inset: -1px 0 0 0;
+    /* On remonte de 1px pour couvrir parfaitement la jonction */
+    /* 
+       Pour une bordure de 3px sur un triangle 36x18 (angles 45°) :
+       Offset latéral = 3 * sqrt(2) ≈ 4.24px.
+       Offset pointe = 4.24px.
+       Le '0' en haut assure qu'il n'y a PAS de bordure horizontale entre la boîte et le triangle.
+    */
+    clip-path: polygon(4.24px 0, calc(100% - 4.24px) 0, 50% calc(100% - 4.24px));
+    background: #121215;
+    /* Fond intérieur par défaut */
+    display: block !important;
+}
+
+/* Styling for Standard Boxes */
+.month-box:not(.special):not(.event-bg):not(.special-7th-anniv):not(.anniv-june-25) .triangle-indicator {
+    background: #333;
+    /* Bordure grise */
+}
+
+.month-box:not(.special):not(.event-bg):not(.special-7th-anniv):not(.anniv-june-25) .triangle-indicator::after {
+    background: #121215;
+    /* Fond sombre */
+}
+
+@media (hover: hover) {
+
+    /* Hover Sync for Standard Boxes */
+    .month-box:not(.special):not(.event-bg):not(.special-7th-anniv):not(.anniv-june-25):hover .triangle-indicator {
+        background: #555;
+        /* Éclaircit la bordure au survol */
+    }
+}
+
+/* Ensure no pseudo-elements interfere */
+.month-box:not(.special):not(.event-bg):not(.special-7th-anniv):not(.anniv-june-25)::after,
+.month-box:not(.special):not(.event-bg):not(.special-7th-anniv):not(.anniv-june-25)::before {
+    display: none;
+    content: none;
+}
+
+/* 7th Anniv specific styling is handled in its own block further down */
+
+/* Hide triangle logic for special events */
+
+/* =========================================
+   CONSTRUCTION MODAL
+   ========================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: rgba(26, 26, 29, 0.95);
+    padding: 3rem;
+    border-radius: 24px;
+    border: 2px solid #ef4444;
+    text-align: center;
+    transform: scale(0.8) translateY(20px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(239, 68, 68, 0.2);
+    max-width: 90%;
+    width: 340px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.modal-overlay.active .modal-content {
+    transform: scale(1) translateY(0);
+}
+
+.construction-icon {
+    width: 120px;
+    height: auto;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    animation: pulseIcon 2s infinite ease-in-out;
+}
+
+@keyframes pulseIcon {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.construction-text {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #fbbf24;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.month-box.event-bg::after,
+.month-box.special::after,
+.month-box.special-7th-anniv::after,
+.month-box.anniv-june-25::after {
+    /* The 7th anniv has its own custom triangle div, so we hide the auto-generated one if it matches */
+    content: none;
+    display: none;
+}
+
+/* Character Wrapper - Keep it contained */
+.character-wrapper {
+    width: 100%;
+    aspect-ratio: 2/3.2;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    /* Clips the image inside the wrapper */
+    box-shadow: none;
+    border: none;
+    cursor: default;
+    /* Interact disabled per previous request */
+    transition: transform 0.2s;
+    background: transparent;
+}
+
+.character-wrapper:hover {
+    /* No scale */
+    z-index: 5;
+}
+
+.character-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* LL Badge Overlay System */
+.character-wrapper.has-ll-badge {
+    overflow: hidden;
+    /* Clip badge to card corners like Zamasu */
+    position: relative;
+    /* Ensure containment */
+}
+
+.character-wrapper .ll-badge-overlay {
+    position: absolute;
+    bottom: 0;
+    /* Flush bottom */
+    left: 5%;
+    /* Centered (100 - 90) / 2 */
+    width: 90%;
+    /* Reduced width to clear corner rounding completely */
+    height: auto !important;
+    z-index: 10;
+    pointer-events: none;
+    object-fit: contain !important;
+    border-radius: 0;
+    display: block;
+}
+
+
+/* Card Slots (Legacy/Empty support) */
+.card-slot {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Empty Month Box - Updated visuals to match standard but empty */
+.month-box.empty {
+    /* Same gradient as standard */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.month-box.empty::before {
+    /* Remove the + sign if user wants "invisible" slots that are not clickable */
+    content: '';
+}
+
+/* Hover effects only on border for standard boxes? */
+.month-box:not(.special):not(.event-bg):not(.special-7th-anniv) {
+    /* Add transition to box for smooth color change */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (hover: hover) {
+    .month-box:not(.special):not(.event-bg):not(.special-7th-anniv):hover {
+        border-color: #555;
+        /* Standard box hover shadow */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        z-index: 20;
+        /* Bring to front on hover */
+    }
+}
+
+/* Badges - Replicating the Logos */
+.badge {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 4px 0;
+    text-align: center;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    text-transform: uppercase;
+    font-size: 0.6rem;
+    letter-spacing: 0.5px;
+    z-index: 10;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+    line-height: 1;
+}
+
+/* Legends Limited Style - Faithful Reproduction */
+.badge.lf {
+    background: linear-gradient(180deg,
+            #fff7cc 0%,
+            #ffd700 20%,
+            #e6ac00 50%,
+            #ffd700 80%,
+            #fff7cc 100%);
+    color: #000;
+    font-family: 'Impact', sans-serif;
+    /* Narrow bold font */
+    font-weight: 400;
+    /* Impact is already bold */
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    padding: 4px 0;
+    width: 100%;
+    left: 0;
+    transform: none;
+    bottom: 0;
+    border: 1px solid #b8860b;
+    border-top: 1px solid #ffffd0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 0 0 10px 10px;
+    /* Round bottom only to match wrapper */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.badge.lf::after {
+    content: "LEGENDS LIMITED";
+    /* Text outline effect using text-shadow */
+    text-shadow: none;
+    filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.5));
+}
+
+/* Ultra Style */
+.badge.ultra {
+    background: black;
+    color: transparent;
+    border-top: 2px solid cyan;
+    background-clip: text;
+    /* Standard property */
+    -webkit-background-clip: text;
+    background-image: linear-gradient(90deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff);
+    animation: rainbow-text 3s linear infinite;
+    font-size: 0.8rem;
+}
+
+.badge.ultra::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    z-index: -1;
+}
+
+.badge.ultra::after {
+    content: "ULTRA";
+    display: block;
+    color: #fff;
+    /* Fallback */
+    background: linear-gradient(90deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
+}
+
+@keyframes rainbow-text {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
+/* Special Backgrounds - Refined */
+.special-anniv-part1 .month-box {
+    border: 2px solid var(--neon-purple);
+    background: linear-gradient(to bottom, rgba(168, 85, 247, 0.1), rgba(0, 0, 0, 0.8));
+}
+
+.special-anniv-part1 .bg-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.4) 0%, transparent 80%);
+}
+
+.special-anniv-part2 .month-box {
+    border: 2px solid var(--neon-red);
+    background: linear-gradient(to bottom, rgba(239, 68, 68, 0.1), rgba(0, 0, 0, 0.8));
+}
+
+.special-anniv-part2 .bg-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(239, 68, 68, 0.4) 0%, transparent 80%);
+}
+
+.special-festival .month-box {
+    border: 2px solid var(--neon-orange);
+    background: linear-gradient(to bottom, rgba(249, 115, 22, 0.1), rgba(0, 0, 0, 0.8));
+}
+
+/* June 2025: Red & Green Animated Diagonal Sweep */
+.anniv-june-25 {
+    position: relative;
+    border: none;
+    border-radius: 16px;
+    z-index: 1;
+    overflow: visible;
+    background:
+        linear-gradient(135deg, #8b0000 0%, #b30000 20%, #cc0000 35%, #006400 65%, #008000 80%, #00a000 100%),
+        linear-gradient(to bottom, #ff0000 0%, #ff4400 30%, #ff8800 45%, #88aa00 55%, #00aa00 70%, #00ff00 100%);
+    background-origin: padding-box, border-box;
+    background-clip: padding-box, border-box;
+    background-size: 200% 200%, 100% 100%;
+    animation: diagonalSweep 8s ease-in-out infinite;
+}
+
+@keyframes diagonalSweep {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Gradient border - red to green (matching May's thickness) */
+.anniv-june-25::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    padding: 1.5px;
+    /* Slightly thinner to visually match May */
+    /* Matches May's 2px padding */
+    background: linear-gradient(to bottom, #ff0000 0%, #ff4400 30%, #ff8800 45%, #88aa00 55%, #00aa00 70%, #00ff00 100%);
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.anniv-june-25 .triangle-indicator {
+    /* Use solid green matching the visual bottom of the box to ensure seamlessness */
+    background: #00a000;
+    /* Solid green, like May style */
+    border-bottom: 2px solid #00ff00;
+    border-right: 2px solid #00ff00;
+    z-index: 0;
+    /* Behind the border (z-index 5) but visible */
+    bottom: 2px !important;
+    /* Raised to close gap with thinner border */
+    /* Pull it up slightly so the border cuts it */
+}
+
+/* Prevent border from disappearing on hover */
+@media (hover: hover) {
+    .anniv-june-25:hover {
+        border-color: transparent !important;
+        /* Force transparent standard border */
+        background:
+            linear-gradient(135deg, #8b0000 0%, #b30000 20%, #cc0000 35%, #006400 65%, #008000 80%, #00a000 100%),
+            linear-gradient(to bottom, #ff0000 0%, #ff4400 30%, #ff8800 45%, #88aa00 55%, #00aa00 70%, #00ff00 100%);
+        background-origin: padding-box, border-box;
+        background-clip: padding-box, border-box;
+        background-size: 200% 200%, 100% 100%;
+        animation: diagonalSweep 8s ease-in-out infinite;
+    }
+}
+
+.special-festival .bg-glow {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(249, 115, 22, 0.5), transparent);
+    animation: pulse-orange 3s infinite;
+}
+
+@keyframes pulse-purple {
+
+    0%,
+    100% {
+        opacity: 0.2;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes pulse-red {
+
+    0%,
+    100% {
+        opacity: 0.2;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes pulse-orange {
+
+    0%,
+    100% {
+        opacity: 0.2;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Global Background Glow Styling */
+.bg-glow {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.3;
+}
+
+.bg-glow.orange {
+    background: linear-gradient(to top, rgba(249, 115, 22, 0.5), transparent);
+    animation: pulse-orange 3s infinite;
+}
+
+.bg-glow.fire {
+    background: linear-gradient(to top, rgba(239, 68, 68, 0.5), transparent);
+    animation: pulse-red 3s infinite;
+}
+
+/* Floating Glow Blobs */
+/* Global Liquid Space Background */
+.liquid-background {
+    position: fixed;
+    inset: 0;
+    z-index: -10;
+    background: #05050a;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.plasma-blob {
+    position: absolute;
+    width: 100vmax;
+    height: 100vmax;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.07;
+    /* Lower global opacity to make it darker/less visible */
+    mix-blend-mode: screen;
+    will-change: transform;
+}
+
+.plasma-blob.p1 {
+    background: radial-gradient(circle, #f97316 0%, transparent 70%);
+    top: -40%;
+    left: -40%;
+    animation: liquidFlow 30s infinite alternate ease-in-out;
+}
+
+.plasma-blob.p2 {
+    background: radial-gradient(circle, #ef4444 0%, transparent 70%);
+    bottom: -40%;
+    right: -40%;
+    animation: liquidFlow 35s infinite alternate-reverse ease-in-out;
+}
+
+.plasma-blob.p3 {
+    background: radial-gradient(circle, #3b82f6 0%, transparent 70%);
+    top: 10%;
+    left: 20%;
+    animation: liquidFlow 40s infinite alternate ease-in-out;
+    opacity: 0.05;
+}
+
+@keyframes liquidFlow {
+    0% {
+        transform: translate(-15%, -15%) scale(1) rotate(0deg);
+    }
+
+    33% {
+        transform: translate(25%, 20%) scale(1.3) rotate(90deg);
+    }
+
+    66% {
+        transform: translate(-20%, 30%) scale(0.7) rotate(-45deg);
+    }
+
+    100% {
+        transform: translate(15%, -25%) scale(1.2) rotate(180deg);
+    }
+}
+
+
+
+
+
+/* Star Twinkle */
+.star {
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    animation: twinkleStar 6s infinite ease-in-out;
+    /* Slower oscillation */
+    opacity: 0.12;
+    /* Darker stars */
+}
+
+@keyframes twinkleStar {
+
+    0%,
+    100% {
+        opacity: 0.1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: scale(1.3);
+    }
+}
+
+/* Shooting Stars with Varied Trajectories */
+.shooting-star {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(90deg, #fff, transparent);
+    opacity: 0;
+    pointer-events: none;
+    z-index: -5;
+    will-change: transform, opacity;
+}
+
+.shooting-star.s1 {
+    top: 5%;
+    left: 90%;
+    width: 150px;
+    transform: rotate(-45deg);
+    animation: shoot1 15s infinite linear;
+}
+
+.shooting-star.s2 {
+    top: 25%;
+    left: 95%;
+    width: 120px;
+    transform: rotate(-30deg);
+    animation: shoot2 15s infinite linear;
+    animation-delay: 5s;
+}
+
+.shooting-star.s3 {
+    top: 15%;
+    left: 75%;
+    width: 180px;
+    transform: rotate(-55deg);
+    animation: shoot3 15s infinite linear;
+    animation-delay: 10s;
+}
+
+.shooting-star.s4 {
+    top: 40%;
+    left: -10%;
+    width: 130px;
+    transform: rotate(25deg);
+    animation: shoot4 15s infinite linear;
+    animation-delay: 2s;
+}
+
+@keyframes shoot1 {
+    0% {
+        transform: translate(0, 0) rotate(-45deg) scaleX(0);
+        opacity: 0;
+    }
+
+    1% {
+        opacity: 1;
+        transform: translate(-200px, 200px) rotate(-45deg) scaleX(1);
+    }
+
+    3% {
+        opacity: 0;
+        transform: translate(-1000px, 1000px) rotate(-45deg) scaleX(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-1000px, 1000px) rotate(-45deg) scaleX(1);
+    }
+}
+
+@keyframes shoot2 {
+    0% {
+        transform: translate(0, 0) rotate(-30deg) scaleX(0);
+        opacity: 0;
+    }
+
+    1% {
+        opacity: 1;
+        transform: translate(-300px, 173px) rotate(-30deg) scaleX(1.2);
+    }
+
+    3% {
+        opacity: 0;
+        transform: translate(-1200px, 692px) rotate(-30deg) scaleX(1.2);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-1200px, 692px) rotate(-30deg) scaleX(1.2);
+    }
+}
+
+@keyframes shoot3 {
+    0% {
+        transform: translate(0, 0) rotate(-55deg) scaleX(0);
+        opacity: 0;
+    }
+
+    1% {
+        opacity: 1;
+        transform: translate(-150px, 214px) rotate(-55deg) scaleX(0.8);
+    }
+
+    3% {
+        opacity: 0;
+        transform: translate(-800px, 1142px) rotate(-55deg) scaleX(0.8);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-800px, 1142px) rotate(-55deg) scaleX(0.8);
+    }
+}
+
+@keyframes shoot4 {
+    0% {
+        transform: translate(0, 0) rotate(25deg) scaleX(0);
+        opacity: 0;
+    }
+
+    1% {
+        opacity: 1;
+        transform: translate(300px, 139px) rotate(25deg) scaleX(1);
+    }
+
+    3% {
+        opacity: 0;
+        transform: translate(1200px, 559px) rotate(25deg) scaleX(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(1200px, 559px) rotate(25deg) scaleX(1);
+    }
+}
+
+.star.s1 {
+    width: 1px;
+    height: 1px;
+}
+
+.star.s2 {
+    width: 2px;
+    height: 2px;
+}
+
+.festival-card {
+    border: 3px solid #f97316 !important;
+    background: linear-gradient(to bottom, rgba(249, 115, 22, 0.1), rgba(0, 0, 0, 0.8)) !important;
+}
+
+.festival-card.fire-theme {
+    border-color: #ef4444 !important;
+    background: linear-gradient(to bottom, rgba(239, 68, 68, 0.1), rgba(0, 0, 0, 0.8)) !important;
+}
+
+.special-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-5deg);
+    z-index: 0;
+    text-align: center;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    font-size: 1.4rem;
+    line-height: 1.2;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    pointer-events: none;
+    width: 100%;
+    /* Ensure text doesn't wrap weirdly if too wide */
+}
+
+/* Character Art */
+.char-art {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    /* Below badge */
+    transition: transform 0.3s ease;
+}
+
+.badge {
+    z-index: 10;
+}
+
+/* February Secret Flipper */
+.secret-flipper {
+    perspective: 1000px;
+}
+
+.flipper-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0s;
+    /* Instant flip-back */
+    transform-style: preserve-3d;
+}
+
+.secret-flipper.is-flipped .flipper-inner {
+    transform: rotateY(180deg);
+}
+
+.flipper-front,
+.flipper-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    top: 0;
+    left: 0;
+}
+
+.flipper-back {
+    transform: rotateY(180deg);
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.monkey-art {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    /* Perfect fit for the new vertical image */
+    object-position: center;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+}
+
+
+/* =========================================
+   PREDICTION FEATURE (JAN 2026)
+   ========================================= */
+
+/* Prediction Placeholder Button */
+.prediction-placeholder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    gap: 10px;
+}
+
+.prediction-placeholder:hover {
+    transform: scale(1.05);
+}
+
+
+.question-mark {
+    font-size: 7rem;
+    /* Reduced back to 7rem */
+    font-weight: 600;
+
+    /* White/Silver Gradient */
+    background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+
+    /* Soft Glow */
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+
+    line-height: 1;
+    animation: floatingPulse 3s infinite ease-in-out;
+    margin-bottom: 15px;
+    /* Less margin */
+    font-family: 'Outfit', sans-serif;
+    transition: all 0.4s ease;
+}
+
+@keyframes floatingPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+    }
+
+    50% {
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.4));
+    }
+}
+
+.predict-label {
+    margin-top: 0;
+    font-size: 0.9rem;
+    /* Smaller text */
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+
+    /* White Text */
+    color: #ffffff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+
+    /* Glassmorphism Box */
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    background-clip: padding-box;
+    /* Fix for lint */
+
+    padding: 6px 16px;
+    /* Reduced padding */
+    border-radius: 50px;
+    transition: all 0.4s ease;
+}
+
+/* Hover Effects: Passera en brillance */
+.prediction-placeholder:hover .question-mark {
+    background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+    -webkit-background-clip: text;
+    filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.6));
+    /* Moderate brilliancy */
+    transform: scale(1.05);
+    /* Reduced scale on hover */
+}
+
+
+.prediction-placeholder:hover .predict-label {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #ffffff;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
+}
+
+/* Prediction Modal Adjustments */
+/* Prediction Modal Adjustments - Pill Redesign */
+.modal-content.prediction-content {
+    width: 950px;
+    max-width: 95vw;
+    height: 680px;
+    /* Slightly increased to accommodate dividers */
+    border-radius: 40px;
+    /* Anamorphic Glass Effect */
+    background: linear-gradient(180deg, rgba(31, 31, 35, 0.45) 0%, rgba(15, 15, 20, 0.7) 100%);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    /* Softer white border */
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    box-shadow:
+        0 20px 80px rgba(0, 0, 0, 0.6);
+    /* Inner edge refinement */
+}
+
+/* Modal Sections */
+.prediction-modal-section {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.modal-header-section {
+    height: 140px;
+    /* Slight increase to center larger text */
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 25px;
+    /* Pushes the title down */
+}
+
+.modal-body-section {
+    flex-grow: 1;
+    position: relative;
+}
+
+.modal-footer-section {
+    height: 110px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 45px;
+    /* Pushed the button even further up as requested */
+}
+
+/* Choose Button - Unified and Refined */
+.choose-btn-large {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 50px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    /* Text Gradient Style */
+    background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 900;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.1));
+}
+
+.choose-btn-large:hover {
+    transform: scale(1.05) translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.4);
+    /* Subtler White Glow */
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.4));
+}
+
+/* Glass Dividers */
+.modal-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.15) 20%,
+            rgba(255, 255, 255, 0.15) 80%,
+            transparent 100%);
+    flex-shrink: 0;
+}
+
+.modal-header {
+    width: 100%;
+    z-index: 20;
+    pointer-events: none;
+    text-align: center;
+}
+
+.modal-header h2 {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.4rem;
+    /* Enlarged from 1.2rem */
+    font-weight: 800;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    font-family: 'Outfit', sans-serif;
+    line-height: 1.6;
+    padding: 0 10px;
+    /* Prevent touching edges */
+}
+
+/* Visibility Utilities */
+.mobile-only {
+    display: none !important;
+}
+
+.desktop-only {
+    display: block !important;
+}
+
+@media (max-width: 480px) {
+    .mobile-only {
+        display: block !important;
+    }
+
+    .desktop-only {
+        display: none !important;
+    }
+}
+
+.modal-header h2 .highlight-yellow {
+    color: #fbbf24;
+    text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+}
+
+.modal-header h2 .large-q {
+    font-size: 1.7rem;
+    /* Reduced for better integration */
+    color: inherit;
+    vertical-align: baseline;
+    display: inline-block;
+    line-height: 1;
+    margin-right: -1px;
+    font-family: inherit;
+    text-shadow: none;
+}
+
+/* CAROUSEL WRAPPER */
+/* 3D Carousel Container */
+.carousel-wrapper-main {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+    /* Depth for 3D */
+    margin: 0;
+}
+
+/* Navigation Buttons - Positioned specific for pill */
+.nav-btn.prev {
+    position: absolute;
+    left: 4%;
+    /* Shifting towards edges to clear characters */
+    z-index: 100;
+    /* Glassmorphism Nav */
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    width: 70px;
+    /* Slightly larger targets */
+    height: 70px;
+    border-radius: 50%;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 4px;
+    /* Nudge glyph left for visual balance */
+}
+
+.nav-btn.next {
+    position: absolute;
+    right: 4%;
+    z-index: 100;
+    /* Glassmorphism Nav */
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 4px;
+    /* Nudge glyph right for visual balance */
+}
+
+.nav-btn:hover {
+    background: rgba(251, 191, 36, 0.2);
+    color: #fbbf24;
+    transform: scale(1.1);
+    border-color: #fbbf24;
+    box-shadow: 0 0 30px rgba(251, 191, 36, 0.3);
+}
+
+/* Reset View/Track for 3D absolute positioning */
+.carousel-view {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    /* Important */
+    border-radius: 0;
+    padding: 0;
+}
+
+.carousel-track {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    transform: none !important;
+    /* Disable slide transform */
+}
+
+/* Slide Styles */
+.carousel-slide {
+    position: absolute;
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    opacity: 0;
+    transform: scale(0.5);
+    z-index: 1;
+    pointer-events: none;
+    /* Only active interactive */
+    padding: 0;
+    min-width: auto;
+    width: 200px;
+    left: 50%;
+    margin-left: -100px;
+}
+
+/* Active Slide (Center) */
+.carousel-slide.active {
+    opacity: 1;
+    transform: translateX(0) scale(1.15);
+    /* Slightly smaller to avoid overlap */
+    z-index: 30;
+    pointer-events: auto;
+}
+
+/* Previous Slide (Left) */
+.carousel-slide.prev {
+    opacity: 0.4;
+    transform: translateX(-220px) scale(0.8);
+    z-index: 10;
+    filter: blur(2px) grayscale(0.5);
+}
+
+/* Next Slide (Right) */
+.carousel-slide.next {
+    opacity: 0.4;
+    transform: translateX(220px) scale(0.8);
+    z-index: 10;
+    filter: blur(2px) grayscale(0.5);
+}
+
+/* Large Card Adjustments */
+.prediction-card-large {
+    transform: none;
+}
+
+.prediction-card-large .character-wrapper {
+    width: 200px;
+    /* Base width */
+    height: 300px;
+    border: none;
+    /* Removed "cheap" border as requested */
+    background: #000;
+    /* Clean look */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    border-radius: 18px;
+    overflow: hidden;
+    position: relative;
+    contain: paint;
+    /* Hard clipping for performance and consistency */
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+    /* Chrome fix for overflow:hidden + radius */
+    /* Reduced shadow intensity */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+    /* Border removed from here to use overlay */
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+/* Character name badge - Solid background for perfect clipping */
+.card-name-large {
+    opacity: 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 50;
+    font-size: 1rem;
+    font-weight: 900;
+    background: #111114;
+    /* Solid dark color - no more blur haze */
+    box-shadow: 0 -1px 0 #111114;
+    /* Seal the gap between image and badge */
+    padding: 10px 0;
+    color: #fff;
+    letter-spacing: 2.5px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+.carousel-slide.active .card-name-large {
+    opacity: 1;
+    font-size: 1.15rem;
+    padding: 14px 0;
+}
+
+/* Side characters name fade */
+.carousel-slide:not(.active) .card-name-large {
+    opacity: 0.6;
+}
+
+
+/* Global Choose Button - Centered in footer */
+.modal-actions {
+    width: 100%;
+    z-index: 40;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Ensure Logo and Art fit perfectly */
+.prediction-card-large .character-wrapper img.char-art {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.02);
+    /* Slight scale to kill sub-pixel gaps/white lines */
+    transition: transform 0.3s ease;
+}
+
+/* Character Specific Borders (On ::after overlay) */
+
+/* Character specific borders removed */
+.carousel-slide[data-id="pred_buu"].current-slide .character-wrapper::after,
+.carousel-slide[data-id="pred_gomah"].current-slide .character-wrapper::after,
+.carousel-slide[data-id="pred_bojack"].current-slide .character-wrapper::after,
+.carousel-slide[data-id="pred_trunks"].current-slide .character-wrapper {
+    border-color: transparent;
+}
+
+.carousel-slide[data-id="pred_buu"].current-slide .character-wrapper,
+.carousel-slide[data-id="pred_gomah"].current-slide .character-wrapper,
+.carousel-slide[data-id="pred_bojack"].current-slide .character-wrapper,
+.carousel-slide[data-id="pred_trunks"].current-slide .character-wrapper {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+    /* Standard shadow */
+}
+
+.card-name-large {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #fff;
+    text-transform: uppercase;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    letter-spacing: 1px;
+}
+
+.nav-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: #fbbf24;
+    font-size: 1.5rem;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.nav-btn:hover {
+    background: #fbbf24;
+    color: #000;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.choose-btn-large:active {
+    transform: scale(0.98);
+}
+
+/* Result State (Replaces Question Mark) */
+.prediction-result {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    /* Context for absolute positioning if needed */
+    animation: fadeIn 0.5s ease;
+}
+
+/* Ensure centering overrides any grid defaults */
+#box-jan-2026 {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 !important;
+    /* Remove padding to use full space */
+}
+
+
+.prediction-result .character-wrapper {
+    width: 110px;
+    height: auto;
+    aspect-ratio: 2/3;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* Removed yellow border */
+    overflow: hidden;
+    position: relative;
+    z-index: 10;
+}
+
+/* Character name inside the small result box */
+.prediction-result .card-name-large {
+    opacity: 1;
+    font-size: 0.65rem;
+    padding: 6px 0;
+    letter-spacing: 1.5px;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    background: rgba(17, 17, 20, 0.95);
+}
+
+.prediction-result .character-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+.prediction-status-badge {
+    position: relative;
+    margin-bottom: 25px;
+    background: rgba(255, 255, 255, 0.05);
+    /* Glass Background */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    /* Restored White Border */
+
+    /* Vibrant Yellow Text - No gradient */
+    color: #ffd700;
+
+    font-size: 0.75rem;
+    font-weight: 950;
+    padding: 6px 14px;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    z-index: 20;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    white-space: nowrap;
+    filter: none;
+    /* Removed Glow */
+}
+
+/* Prediction Controls (Changer / Valider) */
+.prediction-controls {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+    /* Pushes the buttons further down */
+}
+
+.result-btn {
+    padding: 6px 12px;
+    font-size: 0.65rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.btn-changer {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}
+
+.btn-changer:hover {
+    background: #ef4444;
+    color: #fff;
+}
+
+.btn-valider {
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+}
+
+.btn-valider:hover {
+    background: #22c55e;
+    color: #fff;
+}
+
+/* Locked State Styling */
+.prediction-result.is-locked .prediction-controls {
+    display: none;
+}
+
+.prediction-result.is-locked .prediction-status-badge {
+    border-color: rgba(34, 197, 94, 0.5);
+    filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.3));
+}
+
+
+
+.reset-prediction-btn {
+    position: relative;
+    bottom: auto;
+    /* Static flow */
+    margin-top: 8px;
+    /* Space between image and button */
+    background: #ef4444;
+    color: #fff;
+    border: none;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    z-index: 20;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+}
+
+.reset-prediction-btn:hover {
+    transform: scale(1.1);
+    background: #e11d48;
+}
+
+/* =========================================
+   NEW PAGES STYLING
+   ========================================= */
+
+/* Character Grid Page */
+.character-grid-page {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 1.5rem;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.character-card-wrapper {
+    background: #121215;
+    border: 2px solid #333;
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s, border-color 0.2s;
+    cursor: pointer;
+}
+
+.character-card-wrapper:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-gold);
+}
+
+.card-link {
+    display: block;
+    width: 100%;
+    text-decoration: none;
+}
+
+.character-card-wrapper.placeholder {
+    height: 300px;
+    background: rgba(255, 255, 255, 0.02);
+    border-style: dashed;
+}
+
+.char-art-large {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.card-name {
+    margin-top: 1rem;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+/* Character Detail Page */
+.character-detail-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+    max-width: 1600px;
+    /* Changed from 1200px to match app-container and header-content */
+    margin: 0 auto;
+    padding: 2rem;
+    background: rgba(18, 18, 21, 0.6);
+    border-radius: 20px;
+    border: 1px solid #333;
+    margin-top: 2rem;
+}
+
+.detail-left {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* Character Detail Art Wrapper */
+.detail-art-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 2/3;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(251, 191, 36, 0.2);
+    border: 2px solid #333;
+    overflow: hidden;
+}
+
+.detail-main-art {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.base-art {
+    z-index: 1;
+}
+
+.transform-art {
+    z-index: 2;
+    opacity: 0;
+    /* Hidden by default */
+}
+
+.transform-art.active {
+    opacity: 1;
+    /* Fade in */
+}
+
+.detail-right {
+    flex: 2;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.char-detail-name {
+    font-size: 3rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #fff 0%, #ccc 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin: 0;
+}
+
+.char-tags {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.tag {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    background: #333;
+    color: #fff;
+    border: 1px solid #555;
+}
+
+.tag-ll {
+    background: linear-gradient(45deg, #ffd700, #f59e0b);
+    color: #1a1a1d;
+}
+
+.tag-type-grn {
+    background: #22c55e;
+    color: #fff;
+}
+
+.tag-type-blu {
+    background: #3b82f6;
+    color: #fff;
+}
+
+.tag-type-pur {
+    background: #a855f7;
+    color: #fff;
+}
+
+.tag-class-mele {
+    background: #ef4444;
+    color: #fff;
+}
+
+.tag-class-range {
+    background: #f59e0b;
+    color: #fff;
+}
+
+.char-stats-placeholder {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 1px solid #333;
+}
+
+.stat-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.stat-row span:first-child {
+    min-width: 100px;
+    font-weight: 600;
+    color: #ccc;
+}
+
+.stat-value {
+    min-width: 100px;
+    text-align: right;
+    font-weight: 700;
+    color: var(--accent-gold);
+    font-size: 0.95rem;
+}
+
+.stat-bar {
+    flex: 1;
+    height: 8px;
+    background: #333;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.stat-bar .fill {
+    height: 100%;
+    background: var(--accent-gold);
+    border-radius: 4px;
+}
+
+.char-desc {
+    line-height: 1.6;
+    color: #ddd;
+    font-size: 1.1rem;
+}
+
+/* Previous Media Queries removed - consolidated below */
+
+/* =========================================
+   CONSOLIDATED RESPONSIVE STYLES
+   ========================================= */
+
+/* --- Laptops & Small Desktops (max-width: 1400px) --- */
+@media (max-width: 1400px) {
+    .header-content {
+        padding: 1rem 2rem;
+        width: 100%;
+    }
+}
+
+/* --- Tablets & Horizontal Screens (max-width: 768px) --- */
+@media (max-width: 768px) {
+    .app-container {
+        padding: 0 1rem;
+    }
+
+    /* Grid adapts to 3 columns on tablets - UPDATED SELECTOR */
+    .semester-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 2.5rem 1.5rem;
+        /* Increased vertical gap */
+    }
+
+    /* Labels & Line REMOVED hider because they are now part of .month-item */
+
+    /* Force all boxes to keep shape */
+    .month-box {
+        aspect-ratio: 2/3.1 !important;
+    }
+
+    /* Character Detail Page */
+    .character-detail-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .detail-left,
+    .detail-right {
+        width: 100%;
+        min-width: 0;
+        justify-content: center;
+    }
+
+    .detail-art-wrapper {
+        max-width: 350px;
+    }
+
+    .char-detail-name {
+        text-align: center;
+        font-size: 2.5rem;
+    }
+
+    .char-tags {
+        justify-content: center;
+    }
+}
+
+/* --- Small Tablets & Large Phones (max-width: 768px) --- */
+@media (max-width: 768px) {
+
+    /* Header Reorganization */
+    .main-header {
+        background-image: url('assets/mobile_header_banner.jpg');
+        background-position: center 45%;
+        /* Focus on top of the vertical image */
+    }
+
+    .header-content {
+        flex-direction: column;
+        height: auto;
+        padding: 2rem 1rem;
+        gap: 1.5rem;
+    }
+
+    .header-left,
+    .header-right {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .header-center {
+        order: -1;
+        /* Title on top */
+        margin-bottom: 0.5rem;
+    }
+
+    .header-title {
+        font-size: 1.5rem;
+    }
+
+    /* Timeline Grid - 2 Columns */
+    .semester-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 2rem 1.2rem;
+        /* Balanced gap */
+    }
+
+    .month-line-segment .line {
+        box-shadow: 0 2px 5px rgba(249, 115, 22, 0.4);
+        /* Reduced glow on tablets */
+    }
+
+    .month-box {
+        padding: 10px;
+    }
+
+    .character-card-wrapper.placeholder {
+        display: none;
+    }
+}
+
+/* --- Mobile Phones (max-width: 480px) --- */
+@media (max-width: 480px) {
+
+    /* Header compact */
+    .brand-name {
+        font-size: 1.5rem;
+    }
+
+    .header-title {
+        font-size: 1.2rem;
+    }
+
+    .text-ll,
+    .text-ultra {
+        display: inline-block;
+        /* Keep them together */
+    }
+
+    .semester-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        /* Two columns as per image 2 preference */
+        gap: 20px 10px;
+        /* Balanced vertical and horizontal gap */
+        align-items: stretch !important;
+    }
+
+    .month-item {
+        height: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .month-meta {
+        margin-top: auto !important;
+        /* Force to bottom of the grid row */
+        width: 100% !important;
+    }
+
+    /* Special Month Box Mobile Overrides */
+    .month-box.special-7th-anniv,
+    .month-box.anniv-june-25 {
+        padding: 8px 8px 11px 8px !important;
+        gap: 15px 10px !important;
+    }
+
+    /* Generic Month Box Mobile Reset - Excluded Special Boxes */
+    .month-box:not(.special-7th-anniv):not(.anniv-june-25) {
+        background: linear-gradient(180deg, #1a1a1e 0%, #0c0c0e 100%) !important;
+        border: 2px solid rgba(255, 255, 255, 0.15) !important;
+    }
+
+    .month-box {
+        aspect-ratio: 2/3.1 !important;
+        /* Force large "Dokkan" shape even with 1 character */
+        max-width: 280px;
+        min-width: 0 !important;
+        /* Override desktop min-width to prevent overlap on mobile */
+        margin: 0 auto;
+        padding: 8px 8px 11px 8px;
+        /* Increased to 11px to give LF badges 6px clearance */
+        gap: 15px 10px;
+        /* Clean 15px vertical separation */
+        display: grid;
+        /* Inherits grid-template-rows/columns: 1fr 1fr from PC */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.05) !important;
+        transition: border-color 0.3s ease !important;
+    }
+
+    /* Seamless Triangle Junction Fix - High Precision Fusion */
+    .month-box:not(.special):not(.event-bg):not(.special-7th-anniv):not(.anniv-june-25) .triangle-indicator {
+        background: #333 !important;
+        /* Opaque grey to match visual border and hide overlap */
+        bottom: -20px !important;
+        /* Moved up 1px per user request to -20px */
+        z-index: 100 !important;
+        width: 36px !important;
+        height: 18px !important;
+    }
+
+    .month-box:not(.special):not(.event-bg):not(.special-7th-anniv):not(.anniv-june-25) .triangle-indicator::after {
+        background: #0c0c0e !important;
+        /* Inner fill color on mobile - matches box bg */
+        inset: -1px 0 0 0 !important;
+        clip-path: polygon(4.24px 0, calc(100% - 4.24px) 0, 50% calc(100% - 4.24px)) !important;
+    }
+
+    /* Mobile Hover/Touch/Active State Sync - Matching base specificity to ensure override works */
+    .month-box:not(.special):not(.event-bg):not(.special-7th-anniv):not(.anniv-june-25):hover,
+    .month-box:not(.special):not(.event-bg):not(.special-7th-anniv):not(.anniv-june-25):active,
+    .month-box:not(.special):not(.event-bg):not(.special-7th-anniv):not(.anniv-june-25):focus {
+        border-color: rgba(255, 255, 255, 0.4) !important;
+        background: linear-gradient(180deg, #1f1f23 0%, #121215 100%) !important;
+        /* Preserve dark background, only border changes */
+    }
+
+    .month-box:not(.special):not(.event-bg):not(.special-7th-anniv):not(.anniv-june-25):hover .triangle-indicator,
+    .month-box:not(.special):not(.event-bg):not(.special-7th-anniv):not(.anniv-june-25):active .triangle-indicator,
+    .month-box:not(.special):not(.event-bg):not(.special-7th-anniv):not(.anniv-june-25):focus .triangle-indicator {
+        background: rgba(255, 255, 255, 0.4) !important;
+        /* Lighten outer line on hover */
+        transition: background 0.1s ease;
+    }
+
+    /* Inner color stays dark on hover matching box bottom color */
+    .month-box:not(.special):not(.event-bg):not(.special-7th-anniv):not(.anniv-june-25):hover .triangle-indicator::after,
+    .month-box:not(.special):not(.event-bg):not(.special-7th-anniv):not(.anniv-june-25):active .triangle-indicator::after,
+    .month-box:not(.special):not(.event-bg):not(.special-7th-anniv):not(.anniv-june-25):focus .triangle-indicator::after {
+        background-color: #121215 !important;
+    }
+
+    /* Fix Ultra Styling on Mobile - Ensure no clipping */
+    .character-wrapper.is-ultra {
+        overflow: hidden !important;
+        border-radius: 8px !important;
+    }
+
+    .character-wrapper.is-ultra img {
+        object-position: center !important;
+        object-fit: fill !important;
+        /* Use fill to avoid cropping the internal border */
+        transform: none !important;
+        /* Remove zoom that hides the border */
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    /* Character wrapper taller to show full image + badge */
+    /* Character wrapper - Fix for small screens (S7) */
+    .character-wrapper {
+        aspect-ratio: 2/3.2 !important;
+        /* Match PC ratio to avoid cropping art */
+        height: auto !important;
+        border-radius: 8px !important;
+        overflow: hidden;
+    }
+
+    /* SPECIFIC OVERRIDES FOR NEW SEPARATED BADGE SYSTEM */
+    .character-wrapper.has-ll-badge {
+        aspect-ratio: 2/3.2 !important;
+        /* Match PC ratio */
+        overflow: visible !important;
+        /* Allow badge to pop out */
+        border-radius: 8px !important;
+    }
+
+    .character-wrapper.has-ll-badge img.char-art {
+        border-radius: 8px !important;
+        object-fit: cover !important;
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    .character-wrapper .ll-badge-overlay {
+        width: 88% !important;
+        /* Slightly narrower to show more of the SP logo */
+        left: 6% !important;
+        /* Re-center (100-88)/2 */
+        bottom: 0 !important;
+        /* Reset to 0 like PC to hug the bottom art edge */
+        height: auto !important;
+        object-fit: contain !important;
+    }
+
+    /* Standard Cards */
+    .character-wrapper img {
+        object-fit: cover !important;
+        object-position: center top !important;
+        /* Focus on face */
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    /* REMOVE YELLOW GLOW on mobile to avoid bulb effect - Reverting to flat style */
+    .month-line-segment .line {
+        box-shadow: none !important;
+        width: calc(100% + 0.9rem);
+        height: 3px;
+    }
+
+    .month-line-segment .dot {
+        width: 10px;
+        height: 10px;
+        box-shadow: 0 0 6px #f97316;
+    }
+
+    /* Fixed Detail Page Design */
+    .char-detail-name {
+        font-size: 1.6rem !important;
+        /* Slightly smaller to fit iPhone 360px */
+        text-align: center;
+        width: 100%;
+    }
+
+    .character-grid-page {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    /* Prediction Placeholder Mobile Optimization */
+    .question-mark {
+        font-size: 2.8rem !important;
+        transform: translateY(-5px);
+    }
+
+    .predict-label {
+        font-size: 0.65rem !important;
+        padding: 4px 12px !important;
+        letter-spacing: 0.5px !important;
+    }
+
+    /* Prediction Result Mobile Optimization */
+    .prediction-result {
+        padding: 5px 0;
+        justify-content: flex-start;
+        /* Push content towards top to leave room for buttons */
+    }
+
+    .prediction-status-badge {
+        margin-top: 5px !important;
+        margin-bottom: 10px !important;
+        font-size: 0.55rem !important;
+        padding: 3px 8px !important;
+        letter-spacing: 0.5px !important;
+    }
+
+    .prediction-result .character-wrapper {
+        width: 80px !important;
+        /* Slightly more compact card */
+    }
+
+    .prediction-result .card-name-large {
+        font-size: 0.45rem !important;
+        padding: 3px 0 !important;
+        letter-spacing: 0.8px !important;
+    }
+
+    .prediction-controls {
+        margin-top: 8px !important;
+        gap: 5px !important;
+    }
+
+    .result-btn {
+        padding: 3px 6px !important;
+        font-size: 0.5rem !important;
+        letter-spacing: 0px !important;
+    }
+
+    /* Prediction Modal Mobile Optimization */
+    .modal-content.prediction-content {
+        width: 92vw !important;
+        height: min(650px, 85vh) !important;
+        border-radius: 20px !important;
+    }
+
+    .modal-header-section {
+        height: 100px !important;
+        padding-top: 15px !important;
+    }
+
+    .modal-header h2 {
+        font-size: 0.85rem !important;
+        line-height: 1.3 !important;
+    }
+
+    .modal-header h2 .large-q {
+        font-size: 1.2rem !important;
+    }
+
+    /* Force Track Centering */
+    .carousel-view,
+    .carousel-track {
+        width: 100% !important;
+        left: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    .modal-footer-section {
+        height: 80px !important;
+        padding-bottom: 25px !important;
+    }
+
+    .choose-btn-large {
+        padding: 8px 30px !important;
+        font-size: 0.9rem !important;
+        letter-spacing: 1.5px !important;
+    }
+
+    .prediction-card-large {
+        width: 140px !important;
+        height: auto !important;
+    }
+
+    .prediction-card-large .character-wrapper {
+        width: 100% !important;
+        height: 210px !important;
+        border-radius: 12px !important;
+    }
+
+    .card-name-large {
+        font-size: 0.8rem !important;
+        padding: 8px 0 !important;
+    }
+
+    .carousel-slide.active .card-name-large {
+        font-size: 0.95rem !important;
+        padding: 10px 0 !important;
+    }
+
+    .nav-btn {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 1.1rem !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+    }
+
+    .nav-btn.prev {
+        left: 3% !important;
+    }
+
+    .nav-btn.next {
+        right: 3% !important;
+    }
+
+    /* Carousel Slide Centering Fix */
+    .carousel-slide {
+        width: 140px !important;
+        left: 50% !important;
+        margin-left: -70px !important;
+        transform: translateX(0) scale(0.5) !important;
+    }
+
+    .carousel-slide.active {
+        transform: translateX(0) scale(1.1) !important;
+        z-index: 50 !important;
+    }
+
+    .carousel-slide.prev {
+        transform: translateX(-110px) scale(0.65) !important;
+        filter: blur(1px) grayscale(0.5) !important;
+        opacity: 0.3 !important;
+    }
+
+    .carousel-slide.next {
+        transform: translateX(110px) scale(0.65) !important;
+        filter: blur(1px) grayscale(0.5) !important;
+        opacity: 0.3 !important;
+    }
+}
+
+/* Local Reset for the owner (Secret Button) */
+.local-reset-wrapper {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    opacity: 0.2;
+    transition: opacity 0.3s ease;
+}
+
+.local-reset-wrapper:hover {
+    opacity: 0.8;
+}
+
+.local-only-reset {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.local-only-reset:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 480px) {
+    .local-reset-wrapper {
+        margin-top: 8px;
+    }
+
+    .local-only-reset {
+        font-size: 0.6rem;
+        padding: 4px 8px;
+    }
+}
+
+/* 7th Anniversary Box Styling */
+.special-7th-anniv {
+    /* Gradient Background: Purple (bottom) to Blue (top) */
+    background: linear-gradient(180deg, #3b82f6 0%, #7c3aed 100%);
+    position: relative;
+    border: none;
+    border-radius: 16px;
+    z-index: 1;
+    overflow: visible;
+}
+
+@keyframes particleFloat {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 150px 300px;
+    }
+}
+
+/* Particle Overlay Effect - High Visibility */
+.special-7th-anniv::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 100 !important;
+    /* On top of everything */
+    background-image:
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.4) 1.5px, transparent 1.5px),
+        radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.5) 1px, transparent 1px),
+        radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.4) 1.2px, transparent 1.2px),
+        radial-gradient(circle at 70% 85%, rgba(255, 255, 255, 0.6) 1px, transparent 1px),
+        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, 0.4) 2px, transparent 2px);
+    background-size: 150px 150px;
+    opacity: 0.9;
+    animation: particleFloat 15s linear infinite;
+    mix-blend-mode: screen;
+}
+
+/* 
+   Gradient Border Pseuso-element 
+   Cyan (Top) -> White (Middle) -> Pink (Bottom) 
+*/
+.special-7th-anniv::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    padding: 2px;
+    background: linear-gradient(to bottom, #00ffff, #ffffff 50%, #ff00ff);
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    z-index: 5;
+    /* Above background but below particles/logo */
+    pointer-events: none;
+}
+
+/* Outer Glows (Lueur) */
+.special-7th-anniv::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    z-index: -1;
+
+    /* Reset inheritance */
+    width: auto;
+    height: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    transform: none;
+    border: none;
+    background: transparent;
+    clip-path: none;
+
+    /* The New Glow - Reduced Intensity/Size as requested */
+    box-shadow:
+        0 -2px 8px rgba(0, 255, 255, 0.4),
+        /* Top Cyan Glow - softer */
+        0 2px 8px rgba(255, 0, 255, 0.4);
+    /* Bottom Pink Glow - softer */
+}
+
+/* 7th Anniv Top Logo Precise Positioning */
+.anniv-top-logo {
+    position: absolute;
+    top: -18px;
+    /* Slightly lower for better border overlap */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 54px;
+    /* Reduced from 65px for a more refined look */
+    z-index: 100;
+    pointer-events: none;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.4));
+}
+
+.anniv-top-logo img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Alt Logo (with Dragon Balls) for June/July */
+.anniv-top-logo.alt {
+    width: 54px;
+    /* Synchronized with May logo */
+    top: -18px;
+}
+
+.month-box.empty .anniv-top-logo.alt {
+    top: -24px;
+    /* Slightly adjusted overlap */
+}
+
+
+/* Watermark Logo */
+.anniv-logo-bg {
+    position: absolute;
+    bottom: -35px;
+    /* Pushed very low as requested */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 105%;
+    opacity: 0.12;
+    z-index: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    pointer-events: none;
+}
+
+/* Specific refined look for June bg logo */
+.anniv-june-25 .anniv-logo-bg {
+    width: 105%;
+    opacity: 0.22;
+    bottom: -35px;
+}
+
+/* Specific refined look for May bg logo */
+.special-7th-anniv .anniv-logo-bg {
+    width: 108%;
+    /* Slightly larger to fill space */
+    opacity: 0.13;
+    /* Subtle opacity */
+    bottom: -15px;
+    /* Raised to create more gap from the bottom */
+}
+
+.anniv-logo-bg img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.special-7th-anniv .character-wrapper {
+    z-index: 1;
+}
+
+/* June triangle positioning is now handled by #triangle-june ID at end of file */
+
+
+/* TRIANGLE INDICATOR */
+.special-7th-anniv .triangle-indicator {
+    background: #ff00ff;
+    /* Bordure Rose */
+    bottom: -18px !important;
+    width: 36px !important;
+    height: 18px !important;
+}
+
+.special-7th-anniv .triangle-indicator::after {
+    /* 2px * sqrt(2) ≈ 2.82px */
+    clip-path: polygon(2.82px 0, calc(100% - 2.82px) 0, 50% calc(100% - 2.82px)) !important;
+    background: #7c3aed;
+    /* Fond Violet matching boîte */
+    inset: -1px 0 0 0 !important;
+    display: block !important;
+}
+
+/* Glow pour le triangle de Mai */
+.special-7th-anniv .triangle-indicator {
+    filter: drop-shadow(0 0 4px rgba(255, 0, 255, 0.6));
+}
+
+/* Standardized May triangle - legacy fill removed */
+
+/* Match bottom purple background */
+
+
+/* Footer Styling */
+.main-footer {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    background: url('assets/custom_footer_banner.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center 45%;
+    position: relative;
+    overflow: hidden;
+    padding: 6rem 2rem 4rem 2rem;
+    /* Large top padding to create the requested "gap" */
+    margin-top: 4rem;
+    /* Thinner Golden Glow Border to match header */
+    border-top: 1px solid rgba(251, 191, 36, 0.6);
+    box-shadow: 0 -2px 10px rgba(249, 115, 22, 0.2);
+}
+
+.main-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.92);
+    z-index: 1;
+    animation: fadeOverlay 40s infinite;
+}
+
+.footer-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    /* Stack vertically for cleaner disclaimer */
+    align-items: center;
+    padding: 0 2rem;
+    gap: 1.5rem;
+    animation: fadeText 40s infinite;
+}
+
+.footer-disclaimer {
+    max-width: 800px;
+    text-align: center;
+    color: #f5f5f5;
+    /* Lighter text for better visibility on PC */
+    font-size: 0.95rem;
+    /* Slightly larger for PC */
+    line-height: 1.6;
+    font-weight: 300;
+}
+
+.footer-bottom {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0.9;
+    /* More visible */
+}
+
+.footer-copyright {
+    color: #e0e0e0;
+    /* Lighter text */
+    font-size: 0.85rem;
+    font-weight: 400;
+}
+
+@keyframes fadeOverlay {
+
+    0%,
+    75% {
+        opacity: 1;
+    }
+
+    78%,
+    97% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeText {
+
+    0%,
+    75% {
+        opacity: 1;
+    }
+
+    78%,
+    97% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
+/* Progressive Responsive Grid System */
+
+/* Large screens: 4 columns (900px - 1200px) */
+@media (max-width: 1200px) and (min-width: 900px) {
+    .semester-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 1rem !important;
+    }
+
+    .month-line-segment .line {
+        width: calc(100% + 1.1rem) !important;
+    }
+
+    .month-label {
+        font-size: 1rem;
+    }
+
+    .timeline-grid {
+        padding: 1rem 1.5rem 0 1.5rem;
+    }
+}
+
+/* Medium screens: 3 columns (769px - 900px) */
+@media (max-width: 899px) and (min-width: 769px) {
+    .semester-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 1.2rem !important;
+    }
+
+    .month-line-segment .line {
+        width: calc(100% + 1.3rem) !important;
+    }
+
+    .month-label {
+        font-size: 1rem;
+    }
+
+    .timeline-grid {
+        padding: 1rem 1rem 0 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        gap: 2rem;
+        text-align: center;
+        padding: 0 1rem;
+    }
+
+    .main-footer {
+        padding: 4rem 1rem 3rem 1rem;
+        background: url('assets/footer_banner_mobile.jpg');
+        background-size: cover;
+        background-position: center center;
+    }
+
+    /* Scaling down the 7th Anniv logo for mobile */
+    .anniv-top-logo {
+        width: 42px;
+        /* Reduced further to match tighter mobile grid */
+        top: -14px;
+    }
+
+    .anniv-top-logo.alt {
+        width: 42px;
+        /* Synchronized with May logo */
+        top: -14px;
+    }
+
+    .month-box.empty .anniv-top-logo.alt {
+        top: -18px;
+    }
+
+    /* Fix June Triangle on Mobile - Force Override */
+    /* Kill ghost triangle on mobile */
+    .month-box.anniv-june-25::after {
+        content: none !important;
+        display: none !important;
+        border: none !important;
+        background: none !important;
+    }
+
+    /* June 2025 Mobile Fix - Reverted to Clip-Path with Symmetry Nudge */
+    .month-box.anniv-june-25 .triangle-indicator {
+        background: #00ff00 !important;
+        /* Bordure Verte */
+        bottom: -18px !important;
+        width: 36px !important;
+        height: 18px !important;
+        clip-path: polygon(0 0, 100% 0, 50% 100%) !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        z-index: 20 !important;
+        border: none !important;
+        /* Ensure no border interference */
+        padding: 0 !important;
+    }
+
+    .month-box.anniv-june-25 .triangle-indicator::after {
+        content: '' !important;
+        display: block !important;
+        background: #00a000 !important;
+        /* Fond Vert */
+        /* 1.5px border matching box -> 1.5 * sqrt(2) approx 2.12px */
+        clip-path: polygon(2.12px 0, calc(100% - 2.12px) 0, 50% calc(100% - 2.12px)) !important;
+        inset: -1px 0 0 0 !important;
+        /* Experimental Nudge to fix right-side thickness */
+        transform: translateX(0.5px) !important;
+        width: 100% !important;
+        height: 100% !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        border: none !important;
+    }
+}
+
+/* NUCLEAR FIX - DESKTOP */
+@media (min-width: 769px) {
+    #triangle-june {
+        background: #00ff00 !important;
+        bottom: -18px !important;
+        width: 36px !important;
+        height: 18px !important;
+        left: calc(50% - 18px) !important;
+        transform: none !important;
+    }
+
+    #triangle-june::after {
+        clip-path: polygon(2.82px 0, calc(100% - 2.82px) 0, 50% calc(100% - 2.82px)) !important;
+        background: #00a000 !important;
+        inset: -1px 0 0 0 !important;
+        display: block !important;
+    }
+}
+
+/* NUCLEAR FIX - MOBILE */
+@media (max-width: 768px) {
+    #triangle-june {
+        background: #00ff00 !important;
+        bottom: -18px !important;
+        width: 36px !important;
+        height: 18px !important;
+        left: calc(50% - 18px) !important;
+        transform: none !important;
+    }
+
+    #triangle-june::after {
+        clip-path: polygon(2.82px 0, calc(100% - 2.82px) 0, 50% calc(100% - 2.82px)) !important;
+        background: #00a000 !important;
+        inset: -1px 0 0 0 !important;
+        display: block !important;
+    }
+}

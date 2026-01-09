@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dragon Ball Legends - Chronologie</title>
+
+    <!-- Open Graph / Discord & Twitter Cards -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Dragon Ball Legends - Chronologie">
+    <meta property="og:description" content="Retrouvez l'historique des sorties majeures !">
+    <meta property="og:image" content="https://dragon-ball-legends-timeline.vercel.app/assets/summary.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:url" content="https://dragon-ball-legends-timeline.vercel.app/">
+    <meta name="theme-color" content="#FFD700">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Dragon Ball Legends - Chronologie">
+    <meta name="twitter:description" content="Retrouvez l'historique des sorties majeures !">
+    <meta name="twitter:image" content="https://dragon-ball-legends-timeline.vercel.app/assets/summary.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="nav-styles.css">
+</head>
+
+<body>
+    <div class="liquid-background">
+        <!-- Liquid Plasma Flow -->
+        <div class="plasma-blob p1"></div>
+        <div class="plasma-blob p2"></div>
+        <div class="plasma-blob p3"></div>
+
+        <!-- Dense Starfield -->
+        <div class="star s1" style="top: 5%; left: 5%; animation-delay: 0.2s;"></div>
+        <div class="star s2" style="top: 12%; left: 92%; animation-delay: 1.5s;"></div>
+        <div class="star s1" style="top: 28%; left: 42%; animation-delay: 2.1s;"></div>
+        <div class="star s2" style="top: 33%; left: 12%; animation-delay: 0.8s;"></div>
+        <div class="star s1" style="top: 48%; left: 78%; animation-delay: 3.2s;"></div>
+        <div class="star s2" style="top: 52%; left: 22%; animation-delay: 1.1s;"></div>
+        <div class="star s1" style="top: 68%; left: 98%; animation-delay: 0.5s;"></div>
+        <div class="star s2" style="top: 72%; left: 48%; animation-delay: 2.8s;"></div>
+        <div class="star s1" style="top: 88%; left: 8%; animation-delay: 1.4s;"></div>
+        <div class="star s2" style="top: 92%; left: 32%; animation-delay: 3.5s;"></div>
+        <div class="star s1" style="top: 3%; left: 55%; animation-delay: 0.7s;"></div>
+        <div class="star s2" style="top: 18%; left: 25%; animation-delay: 2.3s;"></div>
+        <div class="star s1" style="top: 38%; left: 88%; animation-delay: 1.9s;"></div>
+        <div class="star s2" style="top: 42%; left: 3%; animation-delay: 0.4s;"></div>
+        <div class="star s1" style="top: 58%; left: 65%; animation-delay: 3.1s;"></div>
+        <div class="star s2" style="top: 63%; left: 18%; animation-delay: 1.6s;"></div>
+        <div class="star s1" style="top: 78%; left: 82%; animation-delay: 2.5s;"></div>
+        <div class="star s2" style="top: 82%; left: 58%; animation-delay: 0.9s;"></div>
+        <div class="star s1" style="top: 96%; left: 12%; animation-delay: 3.4s;"></div>
+        <div class="star s2" style="top: 2%; left: 90%; animation-delay: 1.3s;"></div>
+        <!-- Extra density -->
+        <div class="star s1" style="top: 15%; left: 50%; opacity: 0.2;"></div>
+        <div class="star s1" style="top: 45%; left: 30%; opacity: 0.2;"></div>
+        <div class="star s1" style="top: 75%; left: 70%; opacity: 0.2;"></div>
+        <div class="star s1" style="top: 25%; left: 80%; opacity: 0.2;"></div>
+        <div class="star s1" style="top: 85%; left: 20%; opacity: 0.2;"></div>
+        <div class="star s1" style="top: 10%; left: 10%; opacity: 0.1;"></div>
+        <div class="star s1" style="top: 60%; left: 40%; opacity: 0.1;"></div>
+        <div class="star s1" style="top: 30%; left: 90%; opacity: 0.1;"></div>
+        <div class="star s1" style="top: 50%; left: 50%; opacity: 0.1;"></div>
+        <div class="star s1" style="top: 20%; left: 70%; opacity: 0.1;"></div>
+
+        <!-- Shooting Stars -->
+        <div class="shooting-star s1"></div>
+        <div class="shooting-star s2"></div>
+        <div class="shooting-star s3"></div>
+        <div class="shooting-star s4"></div>
+
+    </div>
+    <div class="app-container">
+        <!-- New Top Navigation Bar -->
+        <nav class="top-nav">
+            <div class="top-nav-content">
+                <!-- Empty left for grid balance -->
+                <div class="nav-left"></div>
+
+                <div class="nav-center">
+                    <img src="assets/DragonBallLegends_Logo.png" alt="Dragon Ball Legends" class="nav-logo">
+                </div>
+
+                <!-- Language Selector -->
+                <div class="nav-right">
+                    <div class="language-selector">
+                        <button class="lang-btn" onclick="toggleLanguageMenu()" id="langBtn">
+                            <span data-i18n="lang_button_text">Language</span>
+                            <div class="arrow-icon"></div>
+                        </button>
+                        <div class="lang-dropdown" id="langDropdown">
+                            <a href="#" class="lang-option" onclick="setLanguage('fr'); return false;" id="lang-fr">
+                                <img src="assets/flag_fr.png" class="lang-flag-img" alt="Français">
+                                <span>Français</span>
+                            </a>
+                            <a href="#" class="lang-option" onclick="setLanguage('en'); return false;" id="lang-en">
+                                <img src="assets/flag_us.png" class="lang-flag-img" alt="English">
+                                <span>English</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Optional: Add a hidden file input for real uploads later -->
+        <input type="file" id="file-upload" hidden>
+
+        <header class="main-header">
+            <div class="header-content">
+                <div class="header-center">
+                    <h1 class="header-title" data-i18n="header_title">Chronologie des sorties majeures : <span
+                            class="text-sparking">Sparking</span>, <span class="text-ll">Legends Limited</span> & <span
+                            class="text-ultra" data-text="Ultra">Ultra</span>
+                    </h1>
+                </div>
+            </div>
+        </header>
+
+        <!-- Interactive Year Switcher -->
+        <section class="year-switcher-container">
+            <div class="year-switcher">
+                <a href="#" class="year-link" id="btn-2024" onclick="switchYear('2024'); return false;">2024</a>
+                <div class="year-divider"></div>
+                <a href="#" class="year-link" id="btn-2025" onclick="switchYear('2025'); return false;">2025</a>
+                <div class="year-divider"></div>
+                <a href="#" class="year-link" id="btn-2026" onclick="switchYear('2026'); return false;">2026</a>
+            </div>
+        </section>
+
+        <main class="timeline-grid">
+            <!-- 2025 Timeline -->
+            <div id="timeline-2025" class="timeline-year">
+                <!-- First Semester: Jan - Jun -->
+                <div class="semester-grid">
+                    <!-- JANVIER -->
+                    <div class="month-item">
+                        <div class="month-box">
+                            <div class="character-wrapper has-ll-badge">
+                                <img src="assets/jan_card_1_no_badge.png" class="char-art"
+                                    alt="Gohan (Ado) & Trunks (Jeune) Legends Limited">
+                                <img src="assets/ll_badge.png" class="ll-badge-overlay" alt="Legends Limited">
+                            </div>
+                            <div class="character-wrapper has-ll-badge">
+                                <img src="assets/jan_card_2_no_badge.png" class="char-art"
+                                    alt="Zamasu Fusionné Corrompu Legends Limited">
+                                <img src="assets/ll_badge.png" class="ll-badge-overlay" alt="Legends Limited">
+                            </div>
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label" data-i18n="month_jan">JANVIER</div>
+                        </div>
+                    </div>
+
+                    <!-- FEVRIER -->
+                    <div class="month-item">
+                        <div class="month-box">
+                            <div class="character-wrapper secret-flipper has-ll-badge">
+                                <div class="flipper-inner">
+                                    <div class="flipper-front">
+                                        <img src="assets/goku-tp_no_badge.png" class="char-art"
+                                            alt="Goku Super Saiyan (Teleport Kamehameha) Legends Limited">
+                                        <img src="assets/ll_badge.png" class="ll-badge-overlay" alt="Legends Limited">
+                                    </div>
+                                    <div class="flipper-back">
+                                        <img src="assets/secret-monkey.png" class="char-art monkey-art"
+                                            alt="Secret Monkey Astronaut">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label" data-i18n="month_feb">FÉVRIER</div>
+                        </div>
+                    </div>
+
+                    <!-- MARS -->
+                    <div class="month-item">
+                        <div class="month-box ultra-month">
+                            <div class="character-wrapper is-ultra">
+                                <img src="assets/cell-ultra.png" class="char-art"
+                                    alt="Cell Parfait (Forme Finale) Ultra">
+                            </div>
+                            <div class="character-wrapper has-ll-badge">
+                                <img src="assets/vegeta-ssj_no_badge.png" class="char-art"
+                                    alt="Vegeta Super Saiyan (Daima) Legends Limited">
+                                <img src="assets/ll_badge.png" class="ll-badge-overlay" alt="Legends Limited">
+                            </div>
+                            <div class="character-wrapper has-ll-badge">
+                                <img src="assets/goku-daima_no_badge.png" class="char-art"
+                                    alt="Goku (Mini) Dragon Ball Daima Legends Limited">
+                                <img src="assets/ll_badge.png" class="ll-badge-overlay" alt="Legends Limited">
+                            </div>
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label" data-i18n="month_mar">MARS</div>
+                        </div>
+                    </div>
+
+                    <!-- AVRIL -->
+                    <div class="month-item">
+                        <div class="month-box">
+                            <div class="character-wrapper has-ll-badge">
+                                <img src="assets/piccolo-daimao_no_badge.png" class="char-art"
+                                    alt="Piccolo Daimao (Vieux) Legends Limited">
+                                <img src="assets/ll_badge.png" class="ll-badge-overlay" alt="Legends Limited">
+                            </div>
+                            <div class="character-wrapper has-ll-badge">
+                                <img src="assets/goku-kid_no_badge.png" class="char-art"
+                                    alt="Goku Enfant (Saga Dragon Ball) Legends Limited">
+                                <img src="assets/ll_badge.png" class="ll-badge-overlay" alt="Legends Limited">
+                            </div>
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label" data-i18n="month_apr">AVRIL</div>
+                        </div>
+                    </div>
+
+                    <!-- MAI -->
+                    <div class="month-item">
+                        <div class="month-box special-7th-anniv">
+                            <div class="anniv-top-logo">
+                                <img src="assets/logo-7th-top.png"
+                                    alt="Logo Dragon Ball Legends 7th Anniversary (Version Haut)">
+                            </div>
+                            <div class="anniv-logo-bg">
+                                <img src="assets/logo-7th-may-bg.png" alt="Emblème Dragon Ball Legends 7th Anniversary">
+                            </div>
+                            <div class="character-wrapper has-ll-badge">
+                                <img src="assets/tag-blue_no_badge.png" class="char-art"
+                                    alt="Goku & Vegeta Super Saiyan Blue Legends Limited">
+                                <img src="assets/ll_badge.png" class="ll-badge-overlay" alt="Legends Limited">
+                            </div>
+                            <div class="character-wrapper has-ll-badge">
+                                <img src="assets/tag-ui_no_badge.png" class="char-art"
+                                    alt="Goku Ultra Instinct & Vegeta Super Saiyan Blue Evolution Legends Limited">
+                                <img src="assets/ll_badge.png" class="ll-badge-overlay" alt="Legends Limited">
+                            </div>
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label" data-i18n="month_may">MAI</div>
+                        </div>
+                    </div>
+
+                    <!-- JUIN -->
+                    <div class="month-item">
+                        <div class="month-box anniv-june-25">
+                            <div class="anniv-top-logo alt">
+                                <img src="assets/logo-7th-alt.png"
+                                    alt="Logo Dragon Ball Legends 7th Anniversary avec Dragon Balls">
+                            </div>
+                            <div class="anniv-logo-bg">
+                                <img src="assets/logo-7th-june-bg.png"
+                                    alt="Emblème Dragon Ball Legends 7th Anniversary">
+                            </div>
+                            <div class="character-wrapper has-ll-badge">
+                                <img src="assets/goku-kaioken_no_badge.png" class="char-art"
+                                    alt="Goku Kaioken (Saga des Saiyans) Legends Limited">
+                                <img src="assets/ll_badge.png" class="ll-badge-overlay" alt="Legends Limited">
+                            </div>
+                            <div class="character-wrapper has-ll-badge">
+                                <img src="assets/vegeta-revive_no_badge.png" class="char-art"
+                                    alt="Vegeta (Saga des Saiyans) avec Résurrection en Goku Legends Limited">
+                                <img src="assets/ll_badge.png" class="ll-badge-overlay" alt="Legends Limited">
+                            </div>
+                            <div class="triangle-indicator" id="triangle-june"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label" data-i18n="month_jun">JUIN</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="semester-separator"></div>
+
+                <!-- Second Semester: Jul - Dec -->
+                <div class="semester-grid">
+                    <!-- JUILLET -->
+                    <div class="month-item">
+                        <div class="month-box ultra-month">
+                            <div class="anniv-top-logo alt">
+                                <img src="assets/logo-7th-alt.png"
+                                    alt="Logo Dragon Ball Legends 7th Anniversary avec Dragon Balls">
+                            </div>
+                            <div class="character-wrapper is-ultra">
+                                <img src="assets/goku-ultra.png" class="char-art" alt="Goku Super Saiyan (Namek) Ultra">
+                            </div>
+                            <div class="character-wrapper is-ultra">
+                                <img src="assets/frieza-ultra.png" class="char-art"
+                                    alt="Freezer Forme Finale (Pleine Puissance) Ultra">
+                            </div>
+                            <div class="character-wrapper has-ll-badge">
+                                <img src="assets/kefla_no_badge.png" class="char-art"
+                                    alt="Kefla Super Saiyan 2 Legends Limited">
+                                <img src="assets/ll_badge.png" class="ll-badge-overlay" alt="Legends Limited">
+                            </div>
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label" data-i18n="month_jul">JUILLET</div>
+                        </div>
+                    </div>
+
+                    <!-- AOUT -->
+                    <div class="month-item">
+                        <div class="month-box ultra-month">
+                            <div class="character-wrapper has-ll-badge">
+                                <img src="assets/metal-cooler_no_badge.png" class="char-art"
+                                    alt="Metal Cooler Legends Limited">
+                                <img src="assets/ll_badge.png" class="ll-badge-overlay" alt="Legends Limited">
+                            </div>
+                            <div class="character-wrapper is-ultra">
+                                <img src="assets/vegeta-ssj4-ultra.png" class="char-art"
+                                    alt="Vegeta Super Saiyan 4 Ultra">
+                            </div>
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label" data-i18n="month_aug">AOÛT</div>
+                        </div>
+                    </div>
+
+                    <!-- SEPTEMBRE -->
+                    <div class="month-item">
+                        <div class="month-box">
+                            <div class="character-wrapper has-ll-badge">
+                                <img src="assets/goku-ssj3-gt_no_badge.png" class="char-art"
+                                    alt="Goku Super Saiyan 3 (Saga GT) Legends Limited">
+                                <img src="assets/ll_badge.png" class="ll-badge-overlay" alt="Legends Limited">
+                            </div>
+                            <div class="character-wrapper has-ll-badge">
+                                <img src="assets/android-13_no_badge.png" class="char-art"
+                                    alt="C-13 Fusionné Legends Limited">
+                                <img src="assets/ll_badge.png" class="ll-badge-overlay" alt="Legends Limited">
+                            </div>
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label" data-i18n="month_sep">SEPTEMBRE</div>
+                        </div>
+                    </div>
+
+                    <!-- OCTOBRE -->
+                    <div class="month-item">
+                        <div class="month-box ultra-month">
+                            <div class="character-wrapper is-ultra">
+                                <img src="assets/zamasu-ultra.png" class="char-art"
+                                    alt="Zamasu Fusionné Corrompu Ultra">
+                            </div>
+                            <div class="character-wrapper">
+                                <img src="assets/goku-tome26.png" class="char-art" alt="Son Goku (Artwork Tome 26)">
+                            </div>
+                            <div class="character-wrapper">
+                                <img src="assets/gohan-ssj-40th.png" class="char-art"
+                                    alt="Super Saiyan Gohan Enfant (40th Anniversary)">
+                            </div>
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label" data-i18n="month_oct">OCTOBRE</div>
+                        </div>
+                    </div>
+
+                    <!-- NOVEMBRE -->
+                    <div class="month-item">
+                        <div class="month-box">
+                            <div class="character-wrapper has-ll-badge">
+                                <img src="assets/janemba_no_badge.png" class="char-art" alt="Janemba Legends Limited">
+                                <img src="assets/ll_badge.png" class="ll-badge-overlay" alt="Legends Limited">
+                            </div>
+                            <div class="character-wrapper has-ll-badge">
+                                <img src="assets/gogeta-angels_no_badge.png" class="char-art"
+                                    alt="Goku & Vegeta (Fusion en Gogeta) Legends Limited">
+                                <img src="assets/ll_badge.png" class="ll-badge-overlay" alt="Legends Limited">
+                            </div>
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label" data-i18n="month_nov">NOVEMBRE</div>
+                        </div>
+                    </div>
+
+                    <!-- DECEMBRE -->
+                    <div class="month-item">
+                        <div class="month-box ultra-month">
+                            <div class="character-wrapper has-ll-badge">
+                                <img src="assets/hit-godku_no_badge.png" class="char-art"
+                                    alt="Hit & Goku (Saga Survie de l'Univers) Legends Limited">
+                                <img src="assets/ll_badge.png" class="ll-badge-overlay" alt="Legends Limited">
+                            </div>
+                            <div class="character-wrapper has-ll-badge">
+                                <img src="assets/gohan-revive_badge.png" class="char-art"
+                                    alt="Son Gohan (Ado) Super Saiyan 2 avec Résurrection Legends Limited">
+                                <img src="assets/ll_badge.png" class="ll-badge-overlay" alt="Legends Limited">
+                            </div>
+                            <div class="character-wrapper is-ultra">
+                                <img src="assets/goku-ultra-dec.png" class="char-art" alt="Goku Super Saiyan 4 Ultra">
+                            </div>
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label" data-i18n="month_dec">DÉCEMBRE</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!-- End of timeline-2025 -->
+
+            <!-- 2024 Timeline (Empty Template - Hidden) -->
+            <div id="timeline-2024" class="timeline-year">
+                <div class="semester-grid">
+                    <!-- Template months for 2024 -->
+                    <div class="month-item">
+                        <div class="month-box">
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label">JANVIER</div>
+                        </div>
+                    </div>
+                    <div class="month-item">
+                        <div class="month-box">
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label">FÉVRIER</div>
+                        </div>
+                    </div>
+                    <div class="month-item">
+                        <div class="month-box">
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label" data-i18n="month_mar">MARS</div>
+                        </div>
+                    </div>
+                    <div class="month-item">
+                        <div class="month-box">
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label">AVRIL</div>
+                        </div>
+                    </div>
+                    <div class="month-item">
+                        <div class="month-box">
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label">MAI</div>
+                        </div>
+                    </div>
+                    <div class="month-item">
+                        <div class="month-box">
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label">JUIN</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="semester-separator"></div>
+                <div class="semester-grid">
+                    <div class="month-item">
+                        <div class="month-box">
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label">JUILLET</div>
+                        </div>
+                    </div>
+                    <div class="month-item">
+                        <div class="month-box">
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label">AOÛT</div>
+                        </div>
+                    </div>
+                    <div class="month-item">
+                        <div class="month-box">
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label">SEPTEMBRE</div>
+                        </div>
+                    </div>
+                    <div class="month-item">
+                        <div class="month-box">
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label">OCTOBRE</div>
+                        </div>
+                    </div>
+                    <div class="month-item">
+                        <div class="month-box">
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label">NOVEMBRE</div>
+                        </div>
+                    </div>
+                    <div class="month-item">
+                        <div class="month-box">
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label">DÉCEMBRE</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2026 Timeline (Template - Hidden) -->
+            <div id="timeline-2026" class="timeline-year">
+                <div class="semester-grid">
+                    <!-- Only January as requested -->
+                    <div class="month-item">
+                        <div class="month-box" id="box-jan-2026">
+                            <!-- Helper content (Question Mark or Selected Character) -->
+                            <div class="prediction-placeholder" onclick="openPredictionModal()">
+                                <div class="question-mark">?</div>
+                                <span class="predict-label">PRÉDICTION</span>
+                            </div>
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label" data-i18n="month_jan">JANVIER</div>
+                        </div>
+                    </div>
+                    <!-- Future months (Coming Soon) -->
+                    <div class="month-item coming-soon">
+                        <div class="month-box">
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label" data-i18n="month_feb">FÉVRIER</div>
+                        </div>
+                    </div>
+                    <div class="month-item coming-soon">
+                        <div class="month-box">
+                            <div class="triangle-indicator"></div>
+                        </div>
+                        <div class="month-meta">
+                            <div class="month-line-segment">
+                                <div class="dot"></div>
+                                <div class="line"></div>
+                            </div>
+                            <div class="month-label" data-i18n="month_mar">MARS</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Prediction Modal -->
+        <div id="prediction-modal" class="modal-overlay" onclick="closePredictionModal()">
+            <div class="modal-content prediction-content" onclick="event.stopPropagation()">
+                <!-- Header Section -->
+                <div class="prediction-modal-section modal-header-section">
+                    <div class="modal-header">
+                        <h2 data-i18n="prediction_modal_title"><span class="large-q">Q</span>UI SERA LE <span
+                                class="highlight-yellow">PREMIER</span><br class="mobile-only">
+                            PERSONNAGE MAJEUR <br class="desktop-only">DU MOIS DE <br class="mobile-only">
+                            <span class="highlight-yellow">JANVIER</span> ?
+                        </h2>
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <div class="modal-divider"></div>
+
+                <!-- Body Section (Carousel) -->
+                <div class="prediction-modal-section modal-body-section">
+                    <div class="carousel-wrapper-main">
+                        <button class="nav-btn prev" onclick="moveCarousel(-1)">&#10094;</button>
+                        <ul class="carousel-track">
+                            <!-- Card 1: Buuhan -->
+                            <li class="carousel-slide active" data-id="pred_buu" data-name="BUUHAN">
+                                <div class="prediction-card-large">
+                                    <div class="character-wrapper">
+                                        <img src="assets/pred_buu.jpg" class="char-art" alt="Buuhan">
+                                        <div class="card-name-large" data-i18n="name_pred_buu">BUUHAN</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- Card 2: Gomah -->
+                            <li class="carousel-slide" data-id="pred_gomah" data-name="GOMAH">
+                                <div class="prediction-card-large">
+                                    <div class="character-wrapper">
+                                        <img src="assets/pred_gomah.png" class="char-art" alt="Gomah">
+                                        <div class="card-name-large" data-i18n="name_pred_gomah">GOMAH</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- Card 3: Bojack -->
+                            <li class="carousel-slide" data-id="pred_bojack" data-name="BOJACK">
+                                <div class="prediction-card-large">
+                                    <div class="character-wrapper">
+                                        <img src="assets/pred_bojack.png" class="char-art" alt="Bojack">
+                                        <div class="card-name-large" data-i18n="name_pred_bojack">BOJACK</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- Card 4: Trunks -->
+                            <li class="carousel-slide" data-id="pred_trunks" data-name="TRUNKS">
+                                <div class="prediction-card-large">
+                                    <div class="character-wrapper">
+                                        <img src="assets/pred_trunks.png" class="char-art" alt="Trunks">
+                                        <div class="card-name-large" data-i18n="name_pred_trunks">TRUNKS</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- Card 5: Vegeta SSJ3 (Daima) -->
+                            <li class="carousel-slide" data-id="pred_vegeta_ssj3_daima" data-name="VEGETA SSJ3">
+                                <div class="prediction-card-large">
+                                    <div class="character-wrapper">
+                                        <img src="assets/pred_vegeta_ssj3_daima.jpg" class="char-art"
+                                            alt="Vegeta SSJ3 Daima">
+                                        <div class="card-name-large" data-i18n="name_pred_vegeta_ssj3_daima">VEGETA SSJ3
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <button class="nav-btn next" onclick="moveCarousel(1)">&#10095;</button>
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <div class="modal-divider"></div>
+
+                <!-- Footer Section -->
+                <div class="prediction-modal-section modal-footer-section">
+                    <div class="modal-actions">
+                        <button class="choose-btn-large" onclick="submitCurrentPrediction()"
+                            data-i18n="btn_choose">CHOISIR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Immediate Year Initialization (Prevents Flicker) -->
+        <div id="construction-modal" class="modal-overlay" onclick="closeConstructionModal()">
+            <div class="modal-content" onclick="event.stopPropagation()">
+                <img src="assets/construction_icon.png" alt="Under Construction" class="construction-icon">
+                <p class="construction-text" id="construction-msg" data-i18n="construction_text">TRAVAUX EN COURS</p>
+            </div>
+        </div>
+        <script>
+            (function () {
+                const year = localStorage.getItem('selectedYear') || '2025';
+                const btn = document.getElementById('btn-' + year);
+                const timeline = document.getElementById('timeline-' + year);
+                if (btn) btn.classList.add('active');
+                if (timeline) {
+                    timeline.classList.add('active');
+                    // Add a special class to skip animation on first load
+                    timeline.style.animation = 'none';
+                    timeline.style.opacity = '1';
+                    timeline.style.display = 'block';
+                }
+            })();
+        </script>
+        <footer class="main-footer">
+            <div class="footer-content">
+                <div class="footer-disclaimer" data-i18n="footer_disclaimer">
+                    ©Bird Studio/Shueisha et Toei Animation.<br>
+                    ©Bandai Namco Entertainment Inc.<br>
+                    Site fan non officiel, sans affiliation.
+                </div>
+                <div class="footer-bottom">
+                    <p class="footer-copyright">© 2026</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!-- Supabase Client Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Supabase Configuration -->
+    <script src="supabase-config.js"></script>
+    <!-- Supabase Predictions Logic -->
+    <script src="supabase-predictions.js"></script>
+    <!-- Main Script -->
+    <script src="script.js"></script>
+</body>
+
+</html>
