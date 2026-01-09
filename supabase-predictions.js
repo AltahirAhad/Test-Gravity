@@ -13,6 +13,9 @@ async function signInWithTwitch() {
     if (!db) return;
     const { data, error } = await db.auth.signInWithOAuth({
         provider: 'twitch',
+        options: {
+            redirectTo: window.location.href
+        }
     });
     if (error) console.error('Error logging in:', error);
 }
