@@ -27,6 +27,10 @@ async function signOut() {
     else window.location.reload(); // Refresh to clear state
 }
 
+// Export functions globally
+window.signInWithTwitch = signInWithTwitch;
+window.signOut = signOut;
+
 /**
  * Génère un ID unique pour l'utilisateur (fallback si pas connecté)
  */
@@ -46,93 +50,139 @@ function generateUserCode() {
  * Sauvegarde la prédiction dans Supabase
  */
 async function savePredictionToSupabase(characterId, characterName) {
-    character_id: characterId,
+    if (!supabase) {
+        console.warn('Supabase client not available, skipping cloud save');
+        return;
+    }
+
+    const userCode = generateUserCode();
+
+    // Check for authenticated user
+    const { data: { session } } = await supabase.auth.getSession();
+    let authData = {};
+
+    if (session && session.user) {
+        // User is logged in with Twitch
+        authData = {
+            username: session.user.user_metadata.full_name || session.user.user_metadata.name,
+            avatar_url: session.user.user_metadata.avatar_url,
+        };
+    }
+
+    // 1. Check si l'utilisateur a déjà une prédiction
+    const { data: existingData, error: fetchError } = await supabase
+        .from('predictions')
+        .select('id')
+        .eq('user_code', userCode)
+        .maybeSingle();
+
+    if (fetchError) {
+        console.error('Error fetching prediction:', fetchError);
+        return;
+    }
+
+    const predictionData = {
+        user_code: userCode,
+        character_id: characterId,
         character_name: characterName,
-            is_locked: false
-}])
-                .select();
+        prediction_date: new Date().toISOString(),
+        is_locked: false, // Par défaut non verrouillé
+        ...authData // Ajoute les infos Twitch si disponibles
+    };
 
-if (error) throw error;
-console.log('✅ Prédiction sauvegardée dans Supabase:', data);
-        }
+    let error;
 
-// Sauvegarder aussi en local (backup)
-localStorage.setItem('prediction_2026_id', characterId);
-localStorage.setItem('prediction_2026_name', characterName);
+    if (existingData) {
+        // Update
+        const { error: updateError } = await supabase
+            .from('predictions')
+            .update(predictionData)
+            .eq('user_code', userCode);
+        error = updateError;
+    } else {
+        // Insert
+        const { error: insertError } = await supabase
+            .from('predictions')
+            .insert([predictionData]);
+        error = insertError;
+    }
 
-return true;
-    } catch (error) {
-    console.error('❌ Erreur lors de la sauvegarde:', error);
-    // Fallback sur localStorage si Supabase échoue
-    localStorage.setItem('prediction_2026_id', characterId);
-    localStorage.setItem('prediction_2026_name', characterName);
-    return false;
+    if (error) {
+        console.error('Error saving to Supabase:', error);
+    } else {
+        console.log('✅ Prédiction sauvegardée dans Supabase');
+    }
 }
-}
 
-// Charger la prédiction depuis Supabase
+// Make sure savePredictionToSupabase is also global if needed by script.js
+window.savePredictionToSupabase = savePredictionToSupabase;
+
+/**
+ * Charger la prédiction depuis Supabase
+ */
 async function loadPredictionFromSupabase() {
-    const userCode = getUserCode();
+    const userCode = generateUserCode(); // Use common function
 
-    if (!window.supabaseClient) {
+    if (!supabase) {
         console.error('❌ Supabase client not initialized');
         return null;
     }
 
     try {
-        const { data, error } = await window.supabaseClient
+        const { data, error } = await supabase
             .from('predictions')
             .select('*')
             .eq('user_code', userCode)
-            .single();
+            .maybeSingle();
 
         if (error) {
-            if (error.code === 'PGRST116') {
-                // Pas de prédiction trouvée
-                console.log('ℹ️ Aucune prédiction trouvée pour ce code');
-                return null;
+            console.error('Error loading prediction:', error);
+            return null;
+        }
+
+        if (data) {
+            console.log('✅ Prédiction chargée depuis Supabase:', data);
+
+            // Synchroniser avec localStorage
+            localStorage.setItem('prediction_2026_id', data.character_id);
+            localStorage.setItem('prediction_2026_name', data.character_name);
+            if (data.is_locked) {
+                localStorage.setItem('prediction_2026_locked', 'true');
             }
-            throw error;
+            return data;
         }
 
-        console.log('✅ Prédiction chargée depuis Supabase:', data);
-
-        // Synchroniser avec localStorage
-        localStorage.setItem('prediction_2026_id', data.character_id);
-        localStorage.setItem('prediction_2026_name', data.character_name);
-        if (data.is_locked) {
-            localStorage.setItem('prediction_2026_locked', 'true');
-        }
-
-        return data;
+        return null;
     } catch (error) {
         console.error('❌ Erreur lors du chargement:', error);
-        // Fallback sur localStorage
-        const localId = localStorage.getItem('prediction_2026_id');
-        if (localId) {
-            return {
-                character_id: localId,
-                character_name: localStorage.getItem('prediction_2026_name'),
-                is_locked: localStorage.getItem('prediction_2026_locked') === 'true'
-            };
-        }
         return null;
     }
 }
 
-// Verrouiller une prédiction
-async function lockPredictionInSupabase() {
-    const userCode = getUserCode();
+// Also export loading function if needed
+window.loadPredictionFromSupabase = loadPredictionFromSupabase;
 
-    if (!window.supabaseClient) {
-        console.error('❌ Supabase client not initialized');
-        return false;
-    }
+/**
+ * Verrouiller une prédiction
+ */
+async function lockPredictionInSupabase() {
+    const userCode = generateUserCode();
+
+    if (!supabase) return false;
 
     try {
-        const { data, error } = await window.supabaseClient
+        // Check for authenticated user to update Metadata on lock
+        const { data: { session } } = await supabase.auth.getSession();
+        let updateData = { is_locked: true };
+
+        if (session && session.user) {
+            updateData.username = session.user.user_metadata.full_name || session.user.user_metadata.name;
+            updateData.avatar_url = session.user.user_metadata.avatar_url;
+        }
+
+        const { data, error } = await supabase
             .from('predictions')
-            .update({ is_locked: true })
+            .update(updateData)
             .eq('user_code', userCode)
             .select();
 
@@ -144,61 +194,29 @@ async function lockPredictionInSupabase() {
         return true;
     } catch (error) {
         console.error('❌ Erreur lors du verrouillage:', error);
+        // On lock quand même en local pour l'UX
         localStorage.setItem('prediction_2026_locked', 'true');
         return false;
     }
 }
-
-// Récupérer une prédiction avec un code spécifique (pour migration d'appareil)
-async function loadPredictionByCode(code) {
-    if (!window.supabaseClient) {
-        console.error('❌ Supabase client not initialized');
-        return null;
-    }
-
-    try {
-        const { data, error } = await window.supabaseClient
-            .from('predictions')
-            .select('*')
-            .eq('user_code', code)
-            .single();
-
-        if (error) throw error;
-
-        // Sauvegarder le code et synchroniser
-        localStorage.setItem('user_prediction_code', code);
-        localStorage.setItem('prediction_2026_id', data.character_id);
-        localStorage.setItem('prediction_2026_name', data.character_name);
-        if (data.is_locked) {
-            localStorage.setItem('prediction_2026_locked', 'true');
-        }
-
-        console.log('✅ Prédiction récupérée avec le code:', code);
-        return data;
-    } catch (error) {
-        console.error('❌ Code invalide ou erreur:', error);
-        return null;
-    }
-}
-
-// Afficher le code utilisateur dans l'interface
-function showUserCode() {
-    const userCode = getUserCode();
-    const currentLang = localStorage.getItem('selectedLang') || 'fr';
-
-    const message = currentLang === 'fr'
-        ? `Votre code de prédiction :\n\n${userCode}\n\nSauvegardez-le pour retrouver votre prédiction sur un autre appareil !`
-        : `Your prediction code:\n\n${userCode}\n\nSave it to retrieve your prediction on another device!`;
-
-    alert(message);
-}
+window.lockPredictionInSupabase = lockPredictionInSupabase;
 
 // Initialiser au chargement de la page
 document.addEventListener('DOMContentLoaded', async () => {
+    // Check session first
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+        console.log("👤 User is signed in:", session.user.user_metadata.full_name);
+    }
+
     console.log('🔄 Chargement de la prédiction depuis Supabase...');
     const prediction = await loadPredictionFromSupabase();
 
-    if (prediction) {
-        updatePredictionUI(prediction.character_id);
+    // script.js handles the UI update if window.updatePredictionUI exists, 
+    // or we can dispatch an event or let script.js call loadPredictionFromSupabase itself.
+    // For now, let's just make sure data is in localStorage so script.js picks it up naturally
+    // or call the UI update if available.
+    if (prediction && window.updatePredictionUI) {
+        window.updatePredictionUI(prediction.character_id);
     }
 });
