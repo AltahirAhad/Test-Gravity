@@ -4,14 +4,14 @@
  */
 
 // Initialiser le client Supabase
-const supabase = window.supabaseClient;
+const db = window.supabaseClient;
 
 /**
  * Sign in with Twitch
  */
 async function signInWithTwitch() {
-    if (!supabase) return;
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    if (!db) return;
+    const { data, error } = await db.auth.signInWithOAuth({
         provider: 'twitch',
     });
     if (error) console.error('Error logging in:', error);
@@ -21,8 +21,8 @@ async function signInWithTwitch() {
  * Sign out
  */
 async function signOut() {
-    if (!supabase) return;
-    const { error } = await supabase.auth.signOut();
+    if (!db) return;
+    const { error } = await db.auth.signOut();
     if (error) console.error('Error logging out:', error);
     else window.location.reload(); // Refresh to clear state
 }
@@ -50,7 +50,7 @@ function generateUserCode() {
  * Sauvegarde la prédiction dans Supabase
  */
 async function savePredictionToSupabase(characterId, characterName) {
-    if (!supabase) {
+    if (!db) {
         console.warn('Supabase client not available, skipping cloud save');
         return;
     }
@@ -58,7 +58,7 @@ async function savePredictionToSupabase(characterId, characterName) {
     const userCode = generateUserCode();
 
     // Check for authenticated user
-    const { data: { session } } = await supabase.auth.getSession();
+    const { data: { session } } = await db.auth.getSession();
     let authData = {};
 
     if (session && session.user) {
@@ -70,7 +70,7 @@ async function savePredictionToSupabase(characterId, characterName) {
     }
 
     // 1. Check si l'utilisateur a déjà une prédiction
-    const { data: existingData, error: fetchError } = await supabase
+    const { data: existingData, error: fetchError } = await db
         .from('predictions')
         .select('id')
         .eq('user_code', userCode)
@@ -94,14 +94,14 @@ async function savePredictionToSupabase(characterId, characterName) {
 
     if (existingData) {
         // Update
-        const { error: updateError } = await supabase
+        const { error: updateError } = await db
             .from('predictions')
             .update(predictionData)
             .eq('user_code', userCode);
         error = updateError;
     } else {
         // Insert
-        const { error: insertError } = await supabase
+        const { error: insertError } = await db
             .from('predictions')
             .insert([predictionData]);
         error = insertError;
@@ -123,13 +123,13 @@ window.savePredictionToSupabase = savePredictionToSupabase;
 async function loadPredictionFromSupabase() {
     const userCode = generateUserCode(); // Use common function
 
-    if (!supabase) {
+    if (!db) {
         console.error('❌ Supabase client not initialized');
         return null;
     }
 
     try {
-        const { data, error } = await supabase
+        const { data, error } = await db
             .from('predictions')
             .select('*')
             .eq('user_code', userCode)
@@ -168,11 +168,11 @@ window.loadPredictionFromSupabase = loadPredictionFromSupabase;
 async function lockPredictionInSupabase() {
     const userCode = generateUserCode();
 
-    if (!supabase) return false;
+    if (!db) return false;
 
     try {
         // Check for authenticated user to update Metadata on lock
-        const { data: { session } } = await supabase.auth.getSession();
+        const { data: { session } } = await db.auth.getSession();
         let updateData = { is_locked: true };
 
         if (session && session.user) {
@@ -180,7 +180,7 @@ async function lockPredictionInSupabase() {
             updateData.avatar_url = session.user.user_metadata.avatar_url;
         }
 
-        const { data, error } = await supabase
+        const { data, error } = await db
             .from('predictions')
             .update(updateData)
             .eq('user_code', userCode)
@@ -204,7 +204,7 @@ window.lockPredictionInSupabase = lockPredictionInSupabase;
 // Initialiser au chargement de la page
 document.addEventListener('DOMContentLoaded', async () => {
     // Check session first
-    const { data: { session } } = await supabase.auth.getSession();
+    const { data: { session } } = await db.auth.getSession();
     if (session) {
         console.log("👤 User is signed in:", session.user.user_metadata.full_name);
     }
