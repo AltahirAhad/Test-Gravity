@@ -223,20 +223,41 @@ function updatePredictionUI(characterId) {
     // Determine extension (Buu and Vegeta SSJ3 use .jpg, others .png)
     const ext = (characterId === 'pred_buu' || characterId === 'pred_vegeta_ssj3_daima') ? 'jpg' : 'png';
 
+    // REVEAL LOGIC : Simulation du résultat (Mardi 22:10)
+    // Pour tester, on définit que "pred_buu" est le gagnant.
+    const REVEALED_WINNER_ID = 'pred_buu'; // ID du personnage gagnant (ex: Buuhan)
+
+    // Determine status text/class based on reveal
+    let statusText = isLocked ? (currentLang === 'fr' ? 'PRÉDICTION VALIDÉE' : 'PREDICTION LOCKED') : (currentLang === 'fr' ? 'VOTRE PRÉDICTION' : 'YOUR PREDICTION');
+    let statusClass = isLocked ? 'is-locked' : '';
+    let isWinner = false;
+
+    // Si on a un gagnant DÉVOILÉ, on écrase le statut
+    if (REVEALED_WINNER_ID) {
+        if (characterId === REVEALED_WINNER_ID) {
+            statusText = currentLang === 'fr' ? '🎉 GAGNÉ !' : '🎉 WINNER !';
+            statusClass = 'is-winner'; // Nouvelle classe CSS à ajouter
+            isWinner = true;
+        } else {
+            statusText = currentLang === 'fr' ? 'PERDU...' : 'LOST...';
+            statusClass = 'is-loser'; // Nouvelle classe CSS à ajouter
+        }
+    }
+
     // Build the UI
     box.innerHTML = `
-        <div class="prediction-result ${isLocked ? 'is-locked' : ''}">
-            <div class="prediction-status-badge">${isLocked ? (currentLang === 'fr' ? 'PRÉDICTION VALIDÉE' : 'PREDICTION LOCKED') : (currentLang === 'fr' ? 'VOTRE PRÉDICTION' : 'YOUR PREDICTION')}</div>
+        <div class="prediction-result ${statusClass}">
+            <div class="prediction-status-badge ${isWinner ? 'winner-badge' : ''}">${statusText}</div>
             <div class="character-wrapper">
                 <img src="assets/${characterId}.${ext}" class="char-art" alt="Prediction">
                 <div class="card-name-large">${characterName}</div>
             </div>
-            ${!isLocked ? `
+            ${(!isLocked && !REVEALED_WINNER_ID) ? `
                 <div class="prediction-controls">
                     <button class="result-btn btn-changer">${translations[currentLang].btn_choose === 'CHOISIR' ? 'CHANGER' : 'CHANGE'}</button>
                     <button class="result-btn btn-valider">${translations[currentLang].btn_choose === 'CHOISIR' ? 'VALIDER' : 'CONFIRM'}</button>
                 </div>
-            ` : (isLocal ? `
+            ` : (isLocal && !REVEALED_WINNER_ID ? `
                 <div class="local-reset-wrapper">
                     <button class="local-only-reset" title="${currentLang === 'fr' ? 'Réinitialiser (Local uniquement - Créateur)' : 'Reset (Local only - Creator)'}">
                         <i class="fas fa-undo"></i>
@@ -247,8 +268,8 @@ function updatePredictionUI(characterId) {
         </div>
     `;
 
-    // Add listeners only if not locked
-    if (!isLocked) {
+    // Add listeners only if not locked AND not revealed
+    if (!isLocked && !REVEALED_WINNER_ID) {
         const changerBtn = box.querySelector('.btn-changer');
         if (changerBtn) {
             changerBtn.addEventListener('click', (e) => {
@@ -269,7 +290,7 @@ function updatePredictionUI(characterId) {
                 }
             });
         }
-    } else if (isLocal) {
+    } else if (isLocal && !REVEALED_WINNER_ID) {
         // Local reset for the owner (discreet and only on local dev)
         const localResetBtn = box.querySelector('.local-only-reset');
         if (localResetBtn) {

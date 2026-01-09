@@ -3517,3 +3517,58 @@ body {
         display: block !important;
     }
 }
+
+/* =========================================
+   RESULT REVEAL STYLES (WINNER / LOSER)
+   ========================================= */
+
+.prediction-result.is-winner {
+    border: 2px solid #fbbf24;
+    /* Gold/Yellow Border */
+    background: linear-gradient(to bottom, rgba(251, 191, 36, 0.2), rgba(0, 0, 0, 0.9));
+    box-shadow: 0 0 30px rgba(251, 191, 36, 0.3);
+}
+
+.prediction-result.is-winner .prediction-status-badge {
+    background: #fbbf24;
+    /* Solid Gold Background */
+    color: #000;
+    /* Black text for contrast */
+    border: none;
+    box-shadow: 0 0 15px rgba(251, 191, 36, 0.6);
+    animation: pulse-gold 2s infinite;
+}
+
+.prediction-result.is-loser {
+    border: 2px solid #ef4444;
+    /* Red Border */
+    background: linear-gradient(to bottom, rgba(239, 68, 68, 0.15), rgba(0, 0, 0, 0.9));
+    filter: grayscale(0.8);
+    /* Desaturate the image slightly */
+}
+
+.prediction-result.is-loser .prediction-status-badge {
+    background: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+    border-color: #ef4444;
+}
+
+/* Remove hover effects/brightness for loser to make it look "dead" */
+.prediction-result.is-loser:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+@keyframes pulse-gold {
+
+    0%,
+    100% {
+        box-shadow: 0 0 15px rgba(251, 191, 36, 0.6);
+        transform: scale(1);
+    }
+
+    50% {
+        box-shadow: 0 0 25px rgba(251, 191, 36, 0.9);
+        transform: scale(1.05);
+    }
+}
