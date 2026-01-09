@@ -121,11 +121,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Blacklist for inappropriate usernames
+    const bannedUsernames = [
+        'hitler', 'nazi', 'fuck', 'shit', 'porn', 'sex', 'dick', 'pussy', 'ass',
+        'charliekirk', 'trump', 'biden', 'nigger', 'nigga', 'faggot', 'retard',
+        'admin', 'moderator', 'official', 'staff', 'support'
+    ];
+
+    function isUsernameBanned(username) {
+        const lower = username.toLowerCase();
+        return bannedUsernames.some(banned => lower.includes(banned));
+    }
+
     // Save Profile
     if (saveProfileBtn) {
         saveProfileBtn.addEventListener('click', () => {
             const newName = usernameInput.value.trim() || 'Visiteur';
             const newAvatar = avatarUploadInput.dataset.tempAvatar || storedAvatar || 'assets/secret-monkey.png';
+
+            // Check blacklist
+            if (isUsernameBanned(newName)) {
+                alert('Ce pseudo n\'est pas autorisé. Choisissez-en un autre.');
+                return;
+            }
 
             localStorage.setItem('guest_username', newName);
             localStorage.setItem('guest_avatar', newAvatar);
@@ -448,7 +466,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const translations = {
     fr: {
-        header_title: "Calendrier des Sorties Majeures : <span class='text-sparking'>Sparking</span>, <span class='text-ll'>Legends Limited</span> & <span class='text-ultra' data-text='Ultra'>Ultra</span>",
+        header_title: "Chronologie des Sorties Majeures : <span class='text-sparking'>Sparking</span>, <span class='text-ll'>Legends Limited</span> & <span class='text-ultra' data-text='Ultra'>Ultra</span>",
         month_jan: "JANVIER",
         month_feb: "FÉVRIER",
         month_mar: "MARS",
