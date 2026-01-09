@@ -4,7 +4,8 @@
  */
 
 const SUPABASE_URL = 'https://poseijsmprxjfdeonuvd.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_3evjJlTJULnqPLjnl7bwcQ_IDgt-PFQ';
+/* Ligne 7 à remplacer */
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvc2VpanNtcHJ4amZkZW9udXZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc5ODQzMTgsImV4cCI6MjA4MzU2MDMxOH0.JkhJB_JdbLmfyreyqmiNBdxSc0i2I0dylYCGBNySr_o';
 
 // Initialiser le client Supabase (attendre que la bibliothèque soit chargée)
 let supabaseClient;
